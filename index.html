@@ -3,8 +3,8 @@
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<title>Muhammad Zuhair Askari | Senior Shopify Developer</title>
-<meta name="description" content="Senior Shopify developer. 6+ years shipping commerce at scale for Patagonia, Perfect Snacks, Malbon, Kalki, ZulayKitchen, and more." />
+<title>Muhammad Zuhair Askari | Shopify Developer · AI Engineer · CRO Specialist</title>
+<meta name="description" content="Senior Shopify developer, AI engineer, and data-driven CRO specialist. 6+ years shipping commerce at scale — Patagonia, Perfect Snacks, Malbon and more." />
 <meta name="author" content="Muhammad Zuhair Askari" />
 
 <link rel="preconnect" href="https://fonts.googleapis.com" />
@@ -15,7 +15,8 @@
   :root {
     --bg: #FFFFFF;
     --bg-alt: #FAFAFA;
-    --bg-rail: #FAFAFA;
+    --bg-rail: #F9F6F0;
+    --warm-border: #DDD8CF;
     --ink: #0A0A0A;
     --ink-2: #404040;
     --ink-3: #6B6B6B;
@@ -25,11 +26,16 @@
     --green: #00875A;
     --green-deep: #006644;
     --green-bg: #ECFDF3;
+    --ai: #4F46E5;
+    --ai-deep: #3730A3;
+    --ai-bg: #EEF2FF;
+    --ai-border: rgba(79, 70, 229, 0.18);
     --sans: 'Inter', system-ui, -apple-system, sans-serif;
     --mono: 'JetBrains Mono', ui-monospace, 'SF Mono', monospace;
-    --rail-w: 280px;
+    --rail-w: 300px;
     --pad-y: clamp(3rem, 6vw, 5rem);
     --ease: cubic-bezier(0.32, 0.72, 0, 1);
+    --ease-spring: cubic-bezier(0.34, 1.56, 0.64, 1);
   }
   * { box-sizing: border-box; margin: 0; padding: 0; }
   html { scroll-behavior: smooth; }
@@ -48,34 +54,36 @@
 
   .page { display: grid; grid-template-columns: var(--rail-w) 1fr; min-height: 100vh; }
 
+  /* ── Rail ── */
   .rail {
-    border-right: 1px solid var(--line);
+    border-right: 1px solid var(--warm-border);
     background: var(--bg-rail);
-    padding: 2rem 1.75rem;
+    padding: 1.75rem;
     position: sticky; top: 0;
     height: 100vh; overflow-y: auto;
-    display: flex; flex-direction: column; gap: 2rem;
+    display: flex; flex-direction: column; gap: 1.75rem;
   }
   .rail-header {
-    display: flex; flex-direction: column; gap: 0.85rem;
-    padding-bottom: 1.5rem; border-bottom: 1px solid var(--line);
+    display: flex; flex-direction: column; gap: 0.9rem;
+    padding-bottom: 1.5rem; border-bottom: 1px solid var(--warm-border);
   }
-  .rail-id { display: flex; align-items: center; gap: 0.6rem; }
+  .rail-profile-card {
+    border: 1px solid var(--warm-border); border-radius: 10px;
+    padding: 1.15rem 1.2rem; background: #FFFFFF;
+    box-shadow: 0 1px 4px rgba(0,0,0,0.05);
+  }
   .rail-id-mark {
-    width: 36px; height: 36px;
-    border-radius: 8px; background: var(--ink); color: var(--bg);
+    width: 40px; height: 40px; border-radius: 9px;
+    background: linear-gradient(135deg, #0A0A0A 0%, #2a2a2a 100%);
+    color: #FFFFFF;
     display: flex; align-items: center; justify-content: center;
-    font-family: var(--mono); font-size: 14px; font-weight: 600;
+    font-family: var(--mono); font-size: 15px; font-weight: 600;
     letter-spacing: -0.02em; flex-shrink: 0;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.18);
+    margin-bottom: 0.75rem;
   }
-  .rail-id-name {
-    font-weight: 600; font-size: 14px; line-height: 1.3;
-    color: var(--ink); letter-spacing: -0.015em;
-  }
-  .rail-id-role {
-    font-family: var(--mono); font-size: 11.5px;
-    color: var(--ink-3); line-height: 1.4;
-  }
+  .rail-id-name { font-weight: 600; font-size: 13.5px; line-height: 1.3; color: var(--ink); letter-spacing: -0.015em; margin-bottom: 0.2rem; }
+  .rail-id-role { font-family: var(--mono); font-size: 11px; color: var(--ink-3); line-height: 1.4; }
   .rail-status {
     display: inline-flex; align-items: center; gap: 0.5rem;
     padding: 0.35rem 0.6rem 0.35rem 0.55rem;
@@ -86,16 +94,13 @@
   }
   .rail-status-dot {
     width: 6px; height: 6px; border-radius: 50%;
-    background: var(--green);
-    box-shadow: 0 0 0 0 rgba(0, 135, 90, 0.5);
-    animation: pulse 2.4s infinite;
+    background: var(--green); animation: pulse 2.4s infinite;
   }
   @keyframes pulse {
-    0% { box-shadow: 0 0 0 0 rgba(0, 135, 90, 0.4); }
-    70% { box-shadow: 0 0 0 6px rgba(0, 135, 90, 0); }
-    100% { box-shadow: 0 0 0 0 rgba(0, 135, 90, 0); }
+    0%   { box-shadow: 0 0 0 0   rgba(0,135,90,0.4); }
+    70%  { box-shadow: 0 0 0 6px rgba(0,135,90,0);   }
+    100% { box-shadow: 0 0 0 0   rgba(0,135,90,0);   }
   }
-
   .rail-section { display: flex; flex-direction: column; gap: 0.15rem; }
   .rail-section-label {
     font-family: var(--mono); font-size: 10.5px;
@@ -108,21 +113,18 @@
     color: var(--ink-3); border-radius: 6px;
     transition: all 0.15s var(--ease); font-weight: 500;
   }
-  .rail-link:hover { color: var(--ink); background: var(--line-2); }
+  .rail-link:hover { color: var(--ink); background: #EDE8DF; }
   .rail-link.active {
-    color: var(--ink); background: var(--bg);
-    border: 1px solid var(--line);
-    box-shadow: 0 1px 2px rgba(0,0,0,0.03);
+    color: var(--ink); background: #FFFFFF;
+    border: 1px solid var(--warm-border);
+    box-shadow: 0 1px 3px rgba(0,0,0,0.07);
   }
-  .rail-link-num {
-    font-family: var(--mono); font-size: 11px;
-    color: var(--ink-4); width: 18px; flex-shrink: 0;
-  }
+  .rail-link-num { font-family: var(--mono); font-size: 11px; color: var(--ink-4); width: 18px; flex-shrink: 0; }
   .rail-link.active .rail-link-num { color: var(--green); }
-
+  .rail-link[data-target="ai-data"].active .rail-link-num { color: var(--ai); }
   .rail-meta {
     margin-top: auto; padding-top: 1.5rem;
-    border-top: 1px solid var(--line);
+    border-top: 1px solid var(--warm-border);
     display: flex; flex-direction: column; gap: 0.4rem;
   }
   .rail-meta-row {
@@ -130,26 +132,22 @@
     font-family: var(--mono); font-size: 11px; color: var(--ink-3);
   }
   .rail-meta-row span:last-child { color: var(--ink-2); }
-  .rail-meta-link {
-    display: inline-flex; align-items: center; gap: 0.35rem;
-    color: var(--ink-2) !important; transition: color 0.15s ease;
-  }
+  .rail-meta-link { display: inline-flex; align-items: center; gap: 0.35rem; color: var(--ink-2) !important; transition: color 0.15s ease; }
   .rail-meta-link:hover { color: var(--ink) !important; }
 
+  /* ── Main ── */
   .main { padding: 0 clamp(2rem, 5vw, 4rem); max-width: 920px; }
-
   .doc-section { padding: var(--pad-y) 0; border-bottom: 1px solid var(--line); }
   .doc-section:last-of-type { border-bottom: none; }
-
   .doc-anchor {
     font-family: var(--mono); font-size: 11.5px;
     color: var(--ink-4); margin-bottom: 0.6rem;
-    display: flex; align-items: center; gap: 0.5rem;
-    letter-spacing: 0.02em;
+    display: flex; align-items: center; gap: 0.5rem; letter-spacing: 0.02em;
   }
-  .doc-anchor-num { color: var(--green); font-weight: 500; }
   .doc-anchor::before { content: '#'; color: var(--ink-4); font-weight: 500; }
-
+  .doc-anchor-num { color: var(--green); font-weight: 500; }
+  .doc-anchor.ai-anchor .doc-anchor-num { color: var(--ai); }
+  .doc-anchor.ai-anchor::before { color: rgba(79,70,229,0.35); }
   .doc-h2 {
     font-family: var(--sans); font-weight: 600;
     font-size: clamp(1.5rem, 2.6vw, 1.95rem);
@@ -157,249 +155,191 @@
     margin-bottom: 1.25rem; color: var(--ink);
   }
 
+  /* ── Hero ── */
   .hero {
     padding-top: clamp(4rem, 8vw, 6rem);
     padding-bottom: clamp(3rem, 6vw, 4.5rem);
     border-bottom: 1px solid var(--line);
+    position: relative; overflow: hidden;
   }
+  .hero-bg {
+    position: absolute; inset: 0;
+    background-image: radial-gradient(circle, var(--line) 1px, transparent 1px);
+    background-size: 22px 22px; opacity: 0.6; pointer-events: none;
+    mask-image: linear-gradient(to bottom right, transparent 0%, rgba(0,0,0,0.25) 40%, rgba(0,0,0,0.15) 100%);
+    -webkit-mask-image: linear-gradient(to bottom right, transparent 0%, rgba(0,0,0,0.25) 40%, rgba(0,0,0,0.15) 100%);
+  }
+  .hero > * { position: relative; }
   .hero-prefix {
     font-family: var(--mono); font-size: 12px;
     color: var(--ink-3); margin-bottom: 1.25rem; letter-spacing: 0.02em;
   }
   .hero-prefix .key { color: var(--ink); font-weight: 500; }
+  .hero-prefix .ai-key { color: var(--ai); font-weight: 500; }
   .hero-title {
     font-family: var(--sans); font-weight: 600;
-    font-size: clamp(2.4rem, 5.4vw, 3.85rem);
-    line-height: 1.02; letter-spacing: -0.04em;
-    margin-bottom: 1.5rem; color: var(--ink); max-width: 24ch;
+    font-size: clamp(2.2rem, 5vw, 3.65rem);
+    line-height: 1.05; letter-spacing: -0.04em;
+    margin-bottom: 1.5rem; color: var(--ink); max-width: 26ch;
   }
   .hero-title .accent { color: var(--green-deep); }
+  .hero-title .accent-ai { color: var(--ai); }
   .hero-lede {
     font-size: clamp(1rem, 1.5vw, 1.1rem);
-    line-height: 1.55; color: var(--ink-2);
+    line-height: 1.65; color: var(--ink-2);
     max-width: 60ch; margin-bottom: 2rem;
   }
-
   .hero-cta { display: flex; flex-wrap: wrap; gap: 0.6rem; margin-bottom: 3rem; }
   .btn {
     display: inline-flex; align-items: center; gap: 0.5rem;
     padding: 0.65rem 1.05rem;
     font-family: var(--sans); font-size: 13.5px; font-weight: 500;
-    border-radius: 6px; transition: all 0.18s var(--ease);
+    border-radius: 6px; transition: all 0.2s var(--ease);
     border: 1px solid transparent; letter-spacing: -0.005em;
   }
-  .btn-primary { background: var(--ink); color: var(--bg); }
-  .btn-primary:hover { background: var(--green-deep); }
-  .btn-secondary { background: var(--bg); color: var(--ink); border-color: var(--line); }
-  .btn-secondary:hover { border-color: var(--ink); background: var(--bg-alt); }
+  .btn-primary { background: var(--ink); color: var(--bg); box-shadow: 0 1px 3px rgba(0,0,0,0.12); }
+  .btn-primary:hover { background: var(--green-deep); transform: translateY(-1px); box-shadow: 0 4px 14px rgba(0,100,68,0.22); }
+  .btn-secondary { background: var(--bg); color: var(--ink); border-color: var(--line); box-shadow: 0 1px 2px rgba(0,0,0,0.04); }
+  .btn-secondary:hover { border-color: var(--ink); background: var(--bg-alt); transform: translateY(-1px); }
   .btn svg { width: 13px; height: 13px; }
 
   .hero-stats {
-    display: grid; grid-template-columns: repeat(3, 1fr); gap: 0;
+    display: grid; grid-template-columns: repeat(4, 1fr); gap: 0;
     border: 1px solid var(--line); border-radius: 10px;
     overflow: hidden; background: var(--bg-alt);
+    box-shadow: 0 2px 8px rgba(0,0,0,0.04);
   }
-  .hero-stat { padding: 1.1rem 1.25rem; border-right: 1px solid var(--line); background: var(--bg); }
+  .hero-stat { padding: 1.1rem 1.25rem; border-right: 1px solid var(--line); background: var(--bg); transition: background 0.2s ease; }
   .hero-stat:last-child { border-right: none; }
-  .hero-stat-label {
-    font-family: var(--mono); font-size: 10.5px;
-    color: var(--ink-3); letter-spacing: 0.04em;
-    text-transform: uppercase; margin-bottom: 0.35rem;
-  }
-  .hero-stat-value {
-    font-family: var(--sans); font-weight: 600;
-    font-size: 1.65rem; line-height: 1; letter-spacing: -0.025em;
-    color: var(--ink); display: flex; align-items: baseline; gap: 0.15rem;
-  }
+  .hero-stat:hover { background: #FAFAFA; }
+  .hero-stat-label { font-family: var(--mono); font-size: 10.5px; color: var(--ink-3); letter-spacing: 0.04em; text-transform: uppercase; margin-bottom: 0.35rem; }
+  .hero-stat-value { font-family: var(--sans); font-weight: 600; font-size: 1.5rem; line-height: 1; letter-spacing: -0.025em; color: var(--ink); display: flex; align-items: baseline; gap: 0.15rem; }
   .hero-stat-value .num { color: var(--green-deep); }
-  .hero-stat-trend { font-family: var(--mono); font-size: 10.5px; color: var(--ink-4); margin-top: 0.4rem; }
-  @media (max-width: 600px) {
+  .hero-stat-value .num-ai { color: var(--ai); }
+  .hero-stat-trend { font-family: var(--mono); font-size: 10px; color: var(--ink-4); margin-top: 0.4rem; }
+  @media (max-width: 720px) {
+    .hero-stats { grid-template-columns: repeat(2, 1fr); }
+    .hero-stat:nth-child(2) { border-right: none; }
+    .hero-stat:nth-child(3) { border-top: 1px solid var(--line); }
+    .hero-stat:nth-child(4) { border-top: 1px solid var(--line); border-right: none; }
+  }
+  @media (max-width: 460px) {
     .hero-stats { grid-template-columns: 1fr; }
-    .hero-stat { border-right: none; border-bottom: 1px solid var(--line); }
+    .hero-stat { border-right: none !important; border-top: none !important; border-bottom: 1px solid var(--line); }
     .hero-stat:last-child { border-bottom: none; }
   }
 
-  .prose p { color: var(--ink-2); font-size: 15px; line-height: 1.65; max-width: 64ch; }
+  /* ── Prose & Info table ── */
+  .prose p { color: var(--ink-2); font-size: 15px; line-height: 1.7; max-width: 64ch; }
   .prose p + p { margin-top: 1rem; }
   .prose strong { color: var(--ink); font-weight: 600; }
-
-  .info-table {
-    margin-top: 1.5rem; border: 1px solid var(--line);
-    border-radius: 8px; overflow: hidden;
-  }
-  .info-row {
-    display: grid; grid-template-columns: 180px 1fr;
-    border-bottom: 1px solid var(--line);
-  }
+  .info-table { margin-top: 1.5rem; border: 1px solid var(--line); border-radius: 8px; overflow: hidden; box-shadow: 0 1px 4px rgba(0,0,0,0.03); }
+  .info-row { display: grid; grid-template-columns: 190px 1fr; border-bottom: 1px solid var(--line); }
   .info-row:last-child { border-bottom: none; }
-  .info-key {
-    font-family: var(--mono); font-size: 12px; color: var(--ink-3);
-    padding: 0.7rem 1rem; background: var(--bg-alt);
-    border-right: 1px solid var(--line);
-  }
+  .info-key { font-family: var(--mono); font-size: 12px; color: var(--ink-3); padding: 0.7rem 1rem; background: var(--bg-alt); border-right: 1px solid var(--line); }
   .info-val { padding: 0.7rem 1rem; font-size: 13.5px; color: var(--ink); }
   @media (max-width: 600px) {
     .info-row { grid-template-columns: 1fr; }
     .info-key { border-right: none; border-bottom: 1px solid var(--line); }
   }
 
-  .projects-grid {
-    display: grid; grid-template-columns: repeat(2, 1fr);
-    gap: 0.85rem; margin-top: 0.5rem;
-  }
+  /* ── Projects ── */
+  .projects-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 0.85rem; margin-top: 0.5rem; }
   .project {
     border: 1px solid var(--line); border-radius: 10px;
     padding: 1.35rem 1.4rem 1.2rem; background: var(--bg);
     transition: transform 0.25s var(--ease), border-color 0.2s ease, box-shadow 0.25s ease;
     display: flex; flex-direction: column; min-height: 200px;
   }
-  .project:hover {
-    transform: translateY(-2px); border-color: var(--ink);
-    box-shadow: 0 12px 28px -16px rgba(0,0,0,0.12);
-  }
-  .project-head {
-    display: flex; justify-content: space-between; align-items: center;
-    margin-bottom: 0.85rem;
-  }
-  .project-id {
-    font-family: var(--mono); font-size: 11px;
-    color: var(--ink-4); letter-spacing: 0.02em;
-  }
-  .project-tag {
-    font-family: var(--mono); font-size: 10.5px;
-    color: var(--ink-3); background: var(--bg-alt);
-    border: 1px solid var(--line);
-    padding: 0.2rem 0.5rem; border-radius: 4px;
-    font-weight: 500; letter-spacing: 0.01em;
-  }
-  .project-name {
-    font-family: var(--sans); font-weight: 600;
-    font-size: 1.05rem; letter-spacing: -0.02em;
-    margin-bottom: 0.5rem; line-height: 1.3; color: var(--ink);
-  }
-  .project-desc {
-    font-size: 13.5px; color: var(--ink-2); line-height: 1.55;
-    flex-grow: 1; margin-bottom: 1.1rem;
-  }
-  .project-foot {
-    display: flex; justify-content: space-between; align-items: center;
-    gap: 0.75rem; padding-top: 0.85rem;
-    border-top: 1px solid var(--line-2);
-  }
-  .project-stack {
-    font-family: var(--mono); font-size: 10.5px;
-    color: var(--ink-4); letter-spacing: 0.01em;
-    overflow: hidden; text-overflow: ellipsis; white-space: nowrap;
-  }
-  .project-link {
-    font-family: var(--mono); font-size: 11px;
-    color: var(--ink-3); font-weight: 500;
-    display: inline-flex; align-items: center; gap: 0.3rem;
-    transition: all 0.18s ease; white-space: nowrap;
-    text-transform: uppercase; letter-spacing: 0.04em; flex-shrink: 0;
-  }
+  .project:hover { transform: translateY(-3px); border-color: var(--ink); box-shadow: 0 16px 32px -12px rgba(0,0,0,0.14); }
+  .project-head { display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.85rem; }
+  .project-id { font-family: var(--mono); font-size: 11px; color: var(--ink-4); letter-spacing: 0.02em; }
+  .project-tag { font-family: var(--mono); font-size: 10.5px; color: var(--ink-3); background: var(--bg-alt); border: 1px solid var(--line); padding: 0.2rem 0.5rem; border-radius: 4px; font-weight: 500; letter-spacing: 0.01em; }
+  .project-tag.tag-ai { color: var(--ai-deep); background: var(--ai-bg); border-color: var(--ai-border); }
+  .project-tag.tag-cro { color: var(--green-deep); background: var(--green-bg); border-color: rgba(0,135,90,0.2); }
+  .project-name { font-family: var(--sans); font-weight: 600; font-size: 1.05rem; letter-spacing: -0.02em; margin-bottom: 0.5rem; line-height: 1.3; color: var(--ink); }
+  .project-desc { font-size: 13.5px; color: var(--ink-2); line-height: 1.55; flex-grow: 1; margin-bottom: 1.1rem; }
+  .project-foot { display: flex; justify-content: space-between; align-items: center; gap: 0.75rem; padding-top: 0.85rem; border-top: 1px solid var(--line-2); }
+  .project-stack { font-family: var(--mono); font-size: 10.5px; color: var(--ink-4); letter-spacing: 0.01em; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+  .project-link { font-family: var(--mono); font-size: 11px; color: var(--ink-3); font-weight: 500; display: inline-flex; align-items: center; gap: 0.3rem; transition: all 0.18s ease; white-space: nowrap; text-transform: uppercase; letter-spacing: 0.04em; flex-shrink: 0; }
   .project:hover .project-link { color: var(--green-deep); gap: 0.45rem; }
   .project-link svg { width: 10px; height: 10px; }
   @media (max-width: 720px) { .projects-grid { grid-template-columns: 1fr; } }
 
-  .services-table { border: 1px solid var(--line); border-radius: 10px; overflow: hidden; }
+  /* ── AI & Data Section ── */
+  .ai-grid {
+    display: grid; grid-template-columns: repeat(2, 1fr);
+    gap: 1px; margin-top: 0.5rem;
+    border: 1px solid var(--line); border-radius: 12px;
+    overflow: hidden; background: var(--line);
+    box-shadow: 0 4px 20px rgba(79,70,229,0.07);
+  }
+  .ai-card { background: var(--bg); padding: 1.8rem; transition: background 0.25s ease; }
+  .ai-card:hover { background: rgba(238,242,255,0.55); }
+  .ai-card-icon {
+    width: 40px; height: 40px; border-radius: 9px;
+    background: var(--ai-bg); border: 1px solid var(--ai-border);
+    display: flex; align-items: center; justify-content: center;
+    margin-bottom: 1.1rem;
+    transition: transform 0.3s var(--ease-spring), box-shadow 0.3s ease;
+  }
+  .ai-card:hover .ai-card-icon { transform: scale(1.1); box-shadow: 0 4px 12px rgba(79,70,229,0.18); }
+  .ai-card-icon svg { width: 18px; height: 18px; color: var(--ai); }
+  .ai-card-title { font-family: var(--sans); font-weight: 600; font-size: 0.975rem; letter-spacing: -0.015em; margin-bottom: 0.6rem; color: var(--ink); line-height: 1.3; }
+  .ai-card-body { font-size: 13.5px; color: var(--ink-2); line-height: 1.7; margin-bottom: 1.1rem; }
+  .ai-tags { display: flex; flex-wrap: wrap; gap: 0.3rem; }
+  .ai-tag { font-family: var(--mono); font-size: 10px; color: var(--ai-deep); background: var(--ai-bg); border: 1px solid var(--ai-border); padding: 0.18rem 0.45rem; border-radius: 4px; letter-spacing: 0.01em; transition: background 0.15s ease; }
+  .ai-tag:hover { background: rgba(79,70,229,0.12); }
+  @media (max-width: 720px) { .ai-grid { grid-template-columns: 1fr; } }
+
+  /* ── Services ── */
+  .services-table { border: 1px solid var(--line); border-radius: 10px; overflow: hidden; box-shadow: 0 2px 8px rgba(0,0,0,0.04); }
   .service-row { border-bottom: 1px solid var(--line); transition: background 0.2s ease; }
   .service-row:last-child { border-bottom: none; }
   .service-row:hover { background: var(--bg-alt); }
-  .service-row-head {
-    display: grid; grid-template-columns: 50px 1fr auto;
-    gap: 1.25rem; padding: 1.25rem 1.5rem; align-items: start;
-  }
+  .service-row-head { display: grid; grid-template-columns: 50px 1fr auto; gap: 1.25rem; padding: 1.25rem 1.5rem; align-items: start; }
   .service-id { font-family: var(--mono); font-size: 12px; color: var(--ink-4); padding-top: 0.2rem; }
-  .service-content h3 {
-    font-family: var(--sans); font-weight: 600;
-    font-size: 1rem; letter-spacing: -0.015em;
-    margin-bottom: 0.4rem; line-height: 1.3; color: var(--ink);
-  }
-  .service-desc {
-    font-size: 13.5px; color: var(--ink-2); line-height: 1.55;
-    margin-bottom: 0.7rem; max-width: 60ch;
-  }
+  .service-content h3 { font-family: var(--sans); font-weight: 600; font-size: 1rem; letter-spacing: -0.015em; margin-bottom: 0.4rem; line-height: 1.3; color: var(--ink); }
+  .service-desc { font-size: 13.5px; color: var(--ink-2); line-height: 1.55; margin-bottom: 0.7rem; max-width: 60ch; }
   .service-tags { display: flex; flex-wrap: wrap; gap: 0.3rem; }
-  .service-tags span {
-    font-family: var(--mono); font-size: 10.5px;
-    color: var(--ink-3); background: var(--bg);
-    border: 1px solid var(--line);
-    padding: 0.18rem 0.45rem; border-radius: 4px;
-  }
+  .service-tags span { font-family: var(--mono); font-size: 10.5px; color: var(--ink-3); background: var(--bg); border: 1px solid var(--line); padding: 0.18rem 0.45rem; border-radius: 4px; }
+  .service-tags span.tag-ai { color: var(--ai-deep); background: var(--ai-bg); border-color: var(--ai-border); }
   .pricing-toggle {
-    align-self: start; background: var(--bg);
-    border: 1px solid var(--line); padding: 0.45rem 0.75rem;
-    border-radius: 6px; font-family: var(--mono);
-    font-size: 11px; color: var(--ink-3); cursor: pointer;
-    transition: all 0.18s ease;
+    align-self: start; background: var(--bg); border: 1px solid var(--line);
+    padding: 0.45rem 0.75rem; border-radius: 6px; font-family: var(--mono);
+    font-size: 11px; color: var(--ink-3); cursor: pointer; transition: all 0.18s ease;
     display: inline-flex; align-items: center; gap: 0.4rem; white-space: nowrap;
   }
-  .pricing-toggle:hover { border-color: var(--ink); color: var(--ink); }
+  .pricing-toggle:hover { border-color: var(--ink); color: var(--ink); background: var(--bg-alt); }
   .pricing-toggle svg { width: 10px; height: 10px; transition: transform 0.25s var(--ease); }
   .pricing-toggle[aria-expanded="true"] svg { transform: rotate(180deg); }
-  .pricing-panel {
-    overflow: hidden; max-height: 0;
-    transition: max-height 0.35s var(--ease);
-    background: var(--bg-alt); border-top: 1px solid transparent;
-  }
+  .pricing-panel { overflow: hidden; max-height: 0; transition: max-height 0.35s var(--ease); background: var(--bg-alt); border-top: 1px solid transparent; }
   .pricing-panel.open { max-height: 240px; border-top: 1px solid var(--line); }
-  .pricing-inner {
-    padding: 1.1rem 1.5rem 1.1rem 4.25rem;
-    display: flex; align-items: center; justify-content: space-between;
-    gap: 1.5rem; flex-wrap: wrap;
-  }
+  .pricing-inner { padding: 1.1rem 1.5rem 1.1rem 4.25rem; display: flex; align-items: center; justify-content: space-between; gap: 1.5rem; flex-wrap: wrap; }
   .pricing-block { display: flex; align-items: baseline; gap: 0.4rem; }
-  .pricing-prefix {
-    font-family: var(--mono); font-size: 10.5px;
-    color: var(--ink-3); text-transform: uppercase; letter-spacing: 0.04em;
-  }
-  .pricing-num {
-    font-family: var(--sans); font-size: 1.35rem; font-weight: 600;
-    line-height: 1; color: var(--ink); letter-spacing: -0.025em;
-  }
+  .pricing-prefix { font-family: var(--mono); font-size: 10.5px; color: var(--ink-3); text-transform: uppercase; letter-spacing: 0.04em; }
+  .pricing-num { font-family: var(--sans); font-size: 1.35rem; font-weight: 600; line-height: 1; color: var(--ink); letter-spacing: -0.025em; }
   .pricing-suffix { font-size: 12.5px; color: var(--ink-3); }
-  .pricing-meta {
-    font-family: var(--mono); font-size: 11px; color: var(--ink-3);
-    flex: 1; min-width: 160px;
-  }
-  .pricing-cta {
-    display: inline-flex; align-items: center; gap: 0.4rem;
-    padding: 0.55rem 0.9rem;
-    font-family: var(--sans); font-size: 12.5px; font-weight: 500;
-    border-radius: 6px; background: var(--ink); color: var(--bg);
-    transition: all 0.18s ease;
-  }
-  .pricing-cta:hover { background: var(--green-deep); }
+  .pricing-meta { font-family: var(--mono); font-size: 11px; color: var(--ink-3); flex: 1; min-width: 160px; }
+  .pricing-cta { display: inline-flex; align-items: center; gap: 0.4rem; padding: 0.55rem 0.9rem; font-family: var(--sans); font-size: 12.5px; font-weight: 500; border-radius: 6px; background: var(--ink); color: var(--bg); transition: all 0.18s ease; }
+  .pricing-cta:hover { background: var(--green-deep); transform: translateY(-1px); }
   .pricing-cta svg { width: 11px; height: 11px; transition: transform 0.2s ease; }
   .pricing-cta:hover svg { transform: translateX(2px); }
   @media (max-width: 720px) {
     .service-row-head { grid-template-columns: 1fr; gap: 0.8rem; padding: 1.1rem 1.25rem; }
     .service-id { padding-top: 0; }
     .pricing-inner { padding: 1rem 1.25rem; }
-    .pricing-toggle { justify-self: start; }
   }
 
-  .stack-grid {
-    display: grid; grid-template-columns: repeat(2, 1fr); gap: 0;
-    border: 1px solid var(--line); border-radius: 10px; overflow: hidden;
-  }
-  .stack-item {
-    padding: 1.1rem 1.35rem;
-    border-right: 1px solid var(--line);
-    border-bottom: 1px solid var(--line);
-  }
+  /* ── Stack ── */
+  .stack-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 0; border: 1px solid var(--line); border-radius: 10px; overflow: hidden; box-shadow: 0 2px 8px rgba(0,0,0,0.04); }
+  .stack-item { padding: 1.1rem 1.35rem; border-right: 1px solid var(--line); border-bottom: 1px solid var(--line); transition: background 0.2s ease; }
+  .stack-item:hover { background: var(--bg-alt); }
   .stack-item:nth-child(2n) { border-right: none; }
   .stack-item:nth-last-child(-n+2) { border-bottom: none; }
-  .stack-key {
-    font-family: var(--mono); font-size: 10.5px;
-    color: var(--ink-3); text-transform: uppercase; letter-spacing: 0.05em;
-    margin-bottom: 0.55rem; display: flex; align-items: center; gap: 0.45rem;
-  }
-  .stack-key::before {
-    content: ''; width: 5px; height: 5px;
-    border-radius: 50%; background: var(--green);
-  }
+  .stack-key { font-family: var(--mono); font-size: 10.5px; color: var(--ink-3); text-transform: uppercase; letter-spacing: 0.05em; margin-bottom: 0.55rem; display: flex; align-items: center; gap: 0.45rem; }
+  .stack-key::before { content: ''; width: 5px; height: 5px; border-radius: 50%; background: var(--green); flex-shrink: 0; }
+  .stack-key.ai-key::before { background: var(--ai); }
   .stack-val { font-size: 13.5px; color: var(--ink); line-height: 1.55; }
   @media (max-width: 720px) {
     .stack-grid { grid-template-columns: 1fr; }
@@ -408,80 +348,35 @@
     .stack-item:nth-last-child(-n+2):not(:last-child) { border-bottom: 1px solid var(--line); }
   }
 
-  .contact-block {
-    border: 1px solid var(--line); border-radius: 10px;
-    padding: 2rem; margin-top: 1rem;
-  }
-  .contact-channels {
-    display: grid; grid-template-columns: repeat(2, 1fr); gap: 0.5rem;
-    margin-top: 1.5rem; padding-top: 1.5rem;
-    border-top: 1px solid var(--line);
-  }
-  .contact-channel {
-    display: flex; align-items: center; gap: 0.85rem;
-    padding: 0.85rem 1rem;
-    border: 1px solid var(--line); border-radius: 8px;
-    transition: all 0.18s ease;
-  }
-  .contact-channel:hover {
-    border-color: var(--ink); background: var(--bg-alt);
-    transform: translateY(-1px);
-  }
-  .contact-channel-icon {
-    width: 32px; height: 32px; border-radius: 6px;
-    background: var(--bg-alt); border: 1px solid var(--line);
-    display: flex; align-items: center; justify-content: center; flex-shrink: 0;
-  }
+  /* ── Contact ── */
+  .contact-block { border: 1px solid var(--line); border-radius: 10px; padding: 2rem; margin-top: 1rem; box-shadow: 0 2px 8px rgba(0,0,0,0.04); }
+  .contact-channels { display: grid; grid-template-columns: repeat(2, 1fr); gap: 0.5rem; margin-top: 1.5rem; padding-top: 1.5rem; border-top: 1px solid var(--line); }
+  .contact-channel { display: flex; align-items: center; gap: 0.85rem; padding: 0.85rem 1rem; border: 1px solid var(--line); border-radius: 8px; transition: all 0.2s var(--ease); }
+  .contact-channel:hover { border-color: var(--ink); background: var(--bg-alt); transform: translateY(-2px); box-shadow: 0 4px 12px rgba(0,0,0,0.08); }
+  .contact-channel-icon { width: 32px; height: 32px; border-radius: 6px; background: var(--bg-alt); border: 1px solid var(--line); display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
   .contact-channel-icon svg { width: 14px; height: 14px; color: var(--ink-2); }
   .contact-channel-text { display: flex; flex-direction: column; min-width: 0; }
-  .contact-channel-label {
-    font-family: var(--mono); font-size: 10.5px;
-    color: var(--ink-3); letter-spacing: 0.04em; text-transform: uppercase;
-  }
-  .contact-channel-val {
-    font-size: 13px; color: var(--ink); font-weight: 500;
-    overflow: hidden; text-overflow: ellipsis; white-space: nowrap;
-  }
-  @media (max-width: 600px) {
-    .contact-channels { grid-template-columns: 1fr; }
-    .contact-block { padding: 1.5rem; }
-  }
+  .contact-channel-label { font-family: var(--mono); font-size: 10.5px; color: var(--ink-3); letter-spacing: 0.04em; text-transform: uppercase; }
+  .contact-channel-val { font-size: 13px; color: var(--ink); font-weight: 500; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+  @media (max-width: 600px) { .contact-channels { grid-template-columns: 1fr; } .contact-block { padding: 1.5rem; } }
 
-  .doc-footer {
-    padding: 2rem 0 3rem;
-    font-family: var(--mono); font-size: 11px; color: var(--ink-3);
-    display: flex; justify-content: space-between;
-    flex-wrap: wrap; gap: 0.75rem;
-  }
+  /* ── Footer ── */
+  .doc-footer { padding: 2rem 0 3rem; font-family: var(--mono); font-size: 11px; color: var(--ink-3); display: flex; justify-content: space-between; flex-wrap: wrap; gap: 0.75rem; }
   .doc-footer-status { display: inline-flex; align-items: center; gap: 0.4rem; }
-  .doc-footer-status .dot {
-    width: 5px; height: 5px;
-    border-radius: 50%; background: var(--green);
-  }
+  .doc-footer-status .dot { width: 5px; height: 5px; border-radius: 50%; background: var(--green); }
 
+  /* ── Mobile bar ── */
   .mobile-bar {
-    display: none;
-    position: sticky; top: 0; z-index: 50;
-    background: rgba(255,255,255,0.92);
-    backdrop-filter: blur(12px);
-    -webkit-backdrop-filter: blur(12px);
-    border-bottom: 1px solid var(--line);
-    padding: 0.85rem 1.25rem;
-    align-items: center; justify-content: space-between;
+    display: none; position: sticky; top: 0; z-index: 50;
+    background: rgba(255,255,255,0.92); backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px); border-bottom: 1px solid var(--line);
+    padding: 0.85rem 1.25rem; align-items: center; justify-content: space-between;
   }
   .mobile-id { display: flex; align-items: center; gap: 0.6rem; }
-  .mobile-id-mark {
-    width: 28px; height: 28px; border-radius: 6px;
-    background: var(--ink); color: var(--bg);
-    display: flex; align-items: center; justify-content: center;
-    font-family: var(--mono); font-size: 12px; font-weight: 600;
-  }
+  .mobile-id-mark { width: 28px; height: 28px; border-radius: 6px; background: var(--ink); color: var(--bg); display: flex; align-items: center; justify-content: center; font-family: var(--mono); font-size: 12px; font-weight: 600; }
   .mobile-id-name { font-size: 13px; font-weight: 600; letter-spacing: -0.01em; }
-  .mobile-cta {
-    padding: 0.45rem 0.85rem;
-    background: var(--ink); color: var(--bg);
-    border-radius: 6px; font-size: 12px; font-weight: 500;
-  }
+  .mobile-cta { padding: 0.45rem 0.85rem; background: var(--ink); color: var(--bg); border-radius: 6px; font-size: 12px; font-weight: 500; transition: background 0.18s ease; }
+  .mobile-cta:hover { background: var(--green-deep); }
   @media (max-width: 900px) {
     .page { grid-template-columns: 1fr; }
     .rail { display: none; }
@@ -489,15 +384,10 @@
     .main { padding: 0 1.5rem; max-width: 100%; }
   }
 
-  .reveal {
-    opacity: 0; transform: translateY(12px);
-    transition: opacity 0.5s var(--ease), transform 0.5s var(--ease);
-  }
+  /* ── Reveal animations ── */
+  .reveal { opacity: 0; transform: translateY(14px); transition: opacity 0.55s var(--ease), transform 0.55s var(--ease); }
   .reveal.visible { opacity: 1; transform: translateY(0); }
-  .reveal-stagger > * {
-    opacity: 0; transform: translateY(10px);
-    transition: opacity 0.5s var(--ease), transform 0.5s var(--ease);
-  }
+  .reveal-stagger > * { opacity: 0; transform: translateY(10px); transition: opacity 0.5s var(--ease), transform 0.5s var(--ease); }
   .reveal-stagger.visible > * { opacity: 1; transform: translateY(0); }
   .reveal-stagger.visible > *:nth-child(1) { transition-delay: 0.04s; }
   .reveal-stagger.visible > *:nth-child(2) { transition-delay: 0.10s; }
@@ -526,12 +416,10 @@
 
   <aside class="rail">
     <div class="rail-header">
-      <div class="rail-id">
+      <div class="rail-profile-card">
         <span class="rail-id-mark">Z</span>
-        <div>
-          <div class="rail-id-name">Muhammad Zuhair Askari</div>
-          <div class="rail-id-role">Senior Shopify Developer</div>
-        </div>
+        <div class="rail-id-name">Muhammad Zuhair Askari</div>
+        <div class="rail-id-role">Shopify · AI · CRO</div>
       </div>
       <div class="rail-status">
         <span class="rail-status-dot"></span>
@@ -542,43 +430,42 @@
     <nav class="rail-section">
       <div class="rail-section-label">Pages</div>
       <a href="#overview" class="rail-link active" data-target="overview"><span class="rail-link-num">01</span><span>Overview</span></a>
-      <a href="#about" class="rail-link" data-target="about"><span class="rail-link-num">02</span><span>About</span></a>
-      <a href="#projects" class="rail-link" data-target="projects"><span class="rail-link-num">03</span><span>Projects</span></a>
-      <a href="#services" class="rail-link" data-target="services"><span class="rail-link-num">04</span><span>Services</span></a>
-      <a href="#stack" class="rail-link" data-target="stack"><span class="rail-link-num">05</span><span>Stack</span></a>
-      <a href="#contact" class="rail-link" data-target="contact"><span class="rail-link-num">06</span><span>Contact</span></a>
+      <a href="#about"    class="rail-link"        data-target="about">   <span class="rail-link-num">02</span><span>About</span></a>
+      <a href="#projects" class="rail-link"        data-target="projects"><span class="rail-link-num">03</span><span>Projects</span></a>
+      <a href="#ai-data"  class="rail-link"        data-target="ai-data"> <span class="rail-link-num">04</span><span>AI &amp; Data</span></a>
+      <a href="#services" class="rail-link"        data-target="services"><span class="rail-link-num">05</span><span>Services</span></a>
+      <a href="#stack"    class="rail-link"        data-target="stack">   <span class="rail-link-num">06</span><span>Stack</span></a>
+      <a href="#contact"  class="rail-link"        data-target="contact"> <span class="rail-link-num">07</span><span>Contact</span></a>
     </nav>
 
     <div class="rail-meta">
       <div class="rail-meta-row"><span>VERSION</span><span>2026.05</span></div>
       <div class="rail-meta-row"><span>LOCATION</span><span>Islamabad, PK</span></div>
       <div class="rail-meta-row"><span>TIMEZONE</span><span>UTC+5</span></div>
-      <div class="rail-meta-row">
-        <span>EMAIL</span>
-        <a href="mailto:zowhair@gmail.com" class="rail-meta-link">zowhair@gmail.com</a>
-      </div>
-      <div class="rail-meta-row">
-        <span>SOCIAL</span>
-        <a href="https://github.com/zowhair" target="_blank" rel="noopener" class="rail-meta-link">github ↗</a>
-      </div>
+      <div class="rail-meta-row"><span>EMAIL</span><a href="mailto:zowhair@gmail.com" class="rail-meta-link">zowhair@gmail.com</a></div>
+      <div class="rail-meta-row"><span>SOCIAL</span><a href="https://github.com/zowhair" target="_blank" rel="noopener" class="rail-meta-link">github ↗</a></div>
     </div>
   </aside>
 
   <main class="main">
 
+    <!-- 01 · Overview -->
     <section id="overview" class="hero">
-      <div class="hero-prefix">Senior Shopify Developer · <span class="key">6+ years</span> · Remote, all timezones</div>
-      <h1 class="hero-title">Six years of <span class="accent">shipping commerce</span> at scale.</h1>
-      <p class="hero-lede">I build Shopify themes, custom apps, Checkout Extensibility, and headless storefronts for DTC brands and agencies. Recent work spans Patagonia, Perfect Snacks, Kalki Fashion, Malbon Golf, and a 50% Q4 lift at ZulayKitchen.</p>
+      <div class="hero-bg"></div>
+      <div class="hero-prefix">
+        Senior Shopify Developer · <span class="ai-key">AI Engineer</span> · CRO Specialist · <span class="key">6+ years</span> · Remote, all timezones
+      </div>
+      <h1 class="hero-title">Commerce engineering, <span class="accent-ai">AI integrations</span>, and <span class="accent">data-driven CRO</span>.</h1>
+      <p class="hero-lede">I build Shopify storefronts, custom apps, and Checkout Extensibility solutions for DTC brands. I also design and implement AI-powered features from LLM integrations to automated workflows and apply rigorous behavioral data analysis and A/B experimentation to drive measurable conversion improvements. Recent work spans Patagonia, Perfect Snacks, Malbon Golf, and a 50% revenue lift at a US brand.</p>
       <div class="hero-cta">
         <a href="#contact" class="btn btn-primary">
           Get in touch
           <svg fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M13.5 4.5 21 12m0 0-7.5 7.5M21 12H3" /></svg>
         </a>
-        <!-- <a href="/resume.pdf" target="_blank" rel="noopener" class="btn btn-secondary">
-          <svg fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M3 16.5v2.25A2.25 2.25 0 0 0 5.25 21h13.5A2.25 2.25 0 0 0 21 18.75V16.5M16.5 12 12 16.5m0 0L7.5 12m4.5 4.5V3" /></svg>
-          Download CV
-        </a> -->
+        <a href="#ai-data" class="btn btn-secondary">
+          View AI &amp; Data work
+          <svg fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="m19.5 8.25-7.5 7.5-7.5-7.5" /></svg>
+        </a>
       </div>
 
       <div class="hero-stats">
@@ -590,32 +477,40 @@
         <div class="hero-stat">
           <div class="hero-stat-label">Revenue Lift</div>
           <div class="hero-stat-value"><span class="num" data-count="50">0</span><span>%</span></div>
-          <div class="hero-stat-trend">YoY @ A US Brand </div>
+          <div class="hero-stat-trend">YoY Q4 @ a US Brand</div>
         </div>
         <div class="hero-stat">
           <div class="hero-stat-label">Brands Shipped</div>
           <div class="hero-stat-value"><span class="num" data-count="10">0</span><span>+</span></div>
           <div class="hero-stat-trend">Patagonia, Perfect Snacks, Malbon</div>
         </div>
+        <div class="hero-stat">
+          <div class="hero-stat-label">A/B Tests Run</div>
+          <div class="hero-stat-value"><span class="num-ai" data-count="30">0</span><span>+</span></div>
+          <div class="hero-stat-trend">Statistically validated wins</div>
+        </div>
       </div>
     </section>
 
+    <!-- 02 · About -->
     <section id="about" class="doc-section">
       <div class="doc-anchor"><span class="doc-anchor-num">02</span> about</div>
-      <h2 class="doc-h2">Engineer first. Operator when it matters.</h2>
+      <h2 class="doc-h2">Engineer first. Data-driven when it matters.</h2>
       <div class="prose">
         <p>Six years inside eCommerce first as a full-stack developer building Laravel and MERN platforms, then deep into the <strong>Shopify ecosystem</strong>: themes, custom apps, App Functions, Checkout Extensibility, and headless storefronts on Remix and Hydrogen.</p>
-        <p>I've shipped work on stores ranging from Patagonia and Perfect Snacks to fast-growing DTC brands. Most recently I led web operations at ZulayKitchen, where I drove a <strong>50% Q4 revenue increase year-over-year</strong> through CRO, A/B testing, and rebuilding the parts of the funnel that were leaking conversions.</p>
-        <p>I work best when I own the problem end-to-end — architecture, implementation, performance, and the conversation with whoever is going to use the thing. I write clean code, mentor junior developers, and care about <strong>shipping over shipping perfectly</strong>.</p>
+        <!-- <p>I've shipped work on stores ranging from Patagonia and Perfect Snacks to fast-growing DTC brands. Most recently I led web operations at ZulayKitchen, where I drove a <strong>50% Q4 revenue increase year-over-year</strong> a result built on systematic behavioral data analysis, structured A/B experimentation, and targeted conversion-focused rebuilds across the PDP, cart, and checkout funnel.</p> -->
+        <p>Increasingly, my work intersects with AI: I integrate large language models and retrieval-augmented generation pipelines into commerce workflows, build automated data-processing agents, and apply AI-assisted tooling to accelerate CRO hypothesis generation and analysis. I treat AI not as a novelty, but as <strong>infrastructure for more intelligent, responsive storefronts</strong>.</p>
+        <p>I work best when I own a problem end-to-endf architecture, implementation, performance, and the conversation with whoever will use it. I write clean code, mentor junior developers, and care about shipping over shipping perfectly.</p>
       </div>
       <div class="info-table">
-        <div class="info-row"><div class="info-key">role</div><div class="info-val">Senior Shopify Developer · Full-Stack Engineer</div></div>
-        <div class="info-row"><div class="info-key">specialization</div><div class="info-val">Shopify Plus, Checkout Extensibility, Hydrogen, CRO</div></div>
+        <div class="info-row"><div class="info-key">role</div><div class="info-val">Senior Shopify Developer · AI Engineer · CRO Specialist</div></div>
+        <div class="info-row"><div class="info-key">specialization</div><div class="info-val">Shopify Plus, Checkout Extensibility, Hydrogen, LLM Integrations, Behavioral Data Analysis, A/B Testing, CRO</div></div>
         <div class="info-row"><div class="info-key">availability</div><div class="info-val">Senior FT roles · Contract · Select projects</div></div>
-        <div class="info-row"><div class="info-key">timezones</div><div class="info-val">UTC+5 base · Working all timezones (US/EU/AU)</div></div>
+        <div class="info-row"><div class="info-key">timezones</div><div class="info-val">UTC+5 base · Working all timezones (US / EU / AU)</div></div>
       </div>
     </section>
 
+    <!-- 03 · Projects -->
     <section id="projects" class="doc-section">
       <div class="doc-anchor"><span class="doc-anchor-num">03</span> projects</div>
       <h2 class="doc-h2">Selected work | brands you'll recognize.</h2>
@@ -634,7 +529,7 @@
         <a href="https://perfectsnacks.com/collections/buildabundle" target="_blank" rel="noopener" class="project">
           <div class="project-head"><span class="project-id">/02</span><span class="project-tag">Custom Build</span></div>
           <div class="project-name">Perfect Snacks</div>
-          <p class="project-desc">Designed and built the Build-a-Bundle page, a custom interactive bundle builder for Clif Bar / Perfect Snacks, handling complex product configuration and cart logic.</p>
+          <p class="project-desc">Designed and built the Build-a-Bundle page — a custom interactive bundle builder for Clif Bar / Perfect Snacks, handling complex product configuration and cart logic.</p>
           <div class="project-foot">
             <span class="project-stack">Liquid · JS · Bundle Logic</span>
             <span class="project-link">VISIT<svg fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M13.5 6H5.25A2.25 2.25 0 0 0 3 8.25v10.5A2.25 2.25 0 0 0 5.25 21h10.5A2.25 2.25 0 0 0 18 18.75V10.5m-10.5 6L21 3m0 0h-5.25M21 3v5.25" /></svg></span>
@@ -650,11 +545,11 @@
           </div>
         </a>
         <!-- <a href="https://www.zulaykitchen.com/" target="_blank" rel="noopener" class="project">
-          <div class="project-head"><span class="project-id">/04</span><span class="project-tag">CRO &amp; Lead</span></div>
+          <div class="project-head"><span class="project-id">/04</span><span class="project-tag tag-cro">CRO &amp; Data</span></div>
           <div class="project-name">ZulayKitchen</div>
-          <p class="project-desc">Led web operations end-to-end. Drove a 50% Q4 revenue increase year-over-year ($191K) through site-wide CRO, A/B testing, and conversion-focused rebuilds across PDP, cart, and checkout.</p>
+          <p class="project-desc">Led web operations end-to-end. Drove a 50% Q4 revenue increase YoY through rigorous behavioral data analysis, structured A/B experimentation, and conversion-focused rebuilds across PDP, cart, and checkout.</p>
           <div class="project-foot">
-            <span class="project-stack">Plus · CRO · A/B Testing</span>
+            <span class="project-stack">Plus · CRO · A/B Testing · Data Analysis</span>
             <span class="project-link">VISIT<svg fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M13.5 6H5.25A2.25 2.25 0 0 0 3 8.25v10.5A2.25 2.25 0 0 0 5.25 21h10.5A2.25 2.25 0 0 0 18 18.75V10.5m-10.5 6L21 3m0 0h-5.25M21 3v5.25" /></svg></span>
           </div>
         </a> -->
@@ -679,16 +574,95 @@
       </div>
     </section>
 
+    <!-- 04 · AI & Data -->
+    <section id="ai-data" class="doc-section">
+      <div class="doc-anchor ai-anchor"><span class="doc-anchor-num">04</span> ai &amp; data</div>
+      <h2 class="doc-h2">AI engineering and data-driven conversion science.</h2>
+      <p style="color: var(--ink-3); font-size: 13.5px; font-family: var(--mono); margin-bottom: 2rem;">Applying AI, behavioral analytics, and rigorous experimentation to commerce outcomes.</p>
+
+      <div class="ai-grid reveal-stagger">
+
+        <div class="ai-card">
+          <div class="ai-card-icon">
+            <svg fill="none" viewBox="0 0 24 24" stroke-width="1.75" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M9.813 15.904 9 18.75l-.813-2.846a4.5 4.5 0 0 0-3.09-3.09L2.25 12l2.846-.813a4.5 4.5 0 0 0 3.09-3.09L9 5.25l.813 2.846a4.5 4.5 0 0 0 3.09 3.09L15.75 12l-2.846.813a4.5 4.5 0 0 0-3.09 3.09ZM18.259 8.715 18 9.75l-.259-1.035a3.375 3.375 0 0 0-2.455-2.456L14.25 6l1.036-.259a3.375 3.375 0 0 0 2.455-2.456L18 2.25l.259 1.035a3.375 3.375 0 0 0 2.456 2.456L21.75 6l-1.035.259a3.375 3.375 0 0 0-2.456 2.456Z" /></svg>
+          </div>
+          <div class="ai-card-title">AI Engineering &amp; LLM Integration</div>
+          <p class="ai-card-body">I design and implement production-grade AI features for eCommerce — from OpenAI and Anthropic API integrations to retrieval-augmented generation (RAG) pipelines, conversational agents, and AI-assisted product discovery. Each integration is built for reliability, latency targets, and measurable business impact rather than novelty.</p>
+          <div class="ai-tags">
+            <span class="ai-tag">OpenAI API</span>
+            <span class="ai-tag">Anthropic API</span>
+            <span class="ai-tag">RAG Pipelines</span>
+            <span class="ai-tag">LLM Agents</span>
+            <span class="ai-tag">Vector Search</span>
+            <span class="ai-tag">Prompt Engineering</span>
+            <span class="ai-tag">Workflow Automation</span>
+          </div>
+        </div>
+
+        <div class="ai-card">
+          <div class="ai-card-icon">
+            <svg fill="none" viewBox="0 0 24 24" stroke-width="1.75" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M3 13.125C3 12.504 3.504 12 4.125 12h2.25c.621 0 1.125.504 1.125 1.125v6.75C7.5 20.496 6.996 21 6.375 21h-2.25A1.125 1.125 0 0 1 3 19.875v-6.75ZM9.75 8.625c0-.621.504-1.125 1.125-1.125h2.25c.621 0 1.125.504 1.125 1.125v11.25c0 .621-.504 1.125-1.125 1.125h-2.25a1.125 1.125 0 0 1-1.125-1.125V8.625ZM16.5 4.125c0-.621.504-1.125 1.125-1.125h2.25C20.496 3 21 3.504 21 4.125v15.75c0 .621-.504 1.125-1.125 1.125h-2.25a1.125 1.125 0 0 1-1.125-1.125V4.125Z" /></svg>
+          </div>
+          <div class="ai-card-title">Behavioral Data Analysis &amp; Insights</div>
+          <p class="ai-card-body">I conduct structured behavioral analytics — cohort analysis, funnel diagnostics, session analysis, and revenue attribution — using Python and modern analytics platforms. The deliverable is always a prioritized, evidence-backed set of actionable hypotheses, not raw dashboards. Data informs every decision before a single line of code is written.</p>
+          <div class="ai-tags">
+            <span class="ai-tag">Python</span>
+            <span class="ai-tag">Pandas</span>
+            <span class="ai-tag">GA4</span>
+            <span class="ai-tag">Mixpanel</span>
+            <span class="ai-tag">Segment</span>
+            <span class="ai-tag">Cohort Analysis</span>
+            <span class="ai-tag">Funnel Diagnostics</span>
+          </div>
+        </div>
+
+        <div class="ai-card">
+          <div class="ai-card-icon">
+            <svg fill="none" viewBox="0 0 24 24" stroke-width="1.75" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M7.5 14.25v2.25m3-4.5v4.5m3-6.75v6.75m3-9v9M6 20.25h12A2.25 2.25 0 0 0 20.25 18V6A2.25 2.25 0 0 0 18 3.75H6A2.25 2.25 0 0 0 3.75 6v12A2.25 2.25 0 0 0 6 20.25Z" /></svg>
+          </div>
+          <div class="ai-card-title">A/B Experimentation &amp; Statistical Analysis</div>
+          <p class="ai-card-body">End-to-end ownership of the experimentation lifecycle: hypothesis formulation grounded in behavioral data, variant design, implementation, and rigorous statistical significance analysis — including both frequentist and Bayesian methods. Every test concludes with an executive-level report mapping results directly to revenue impact. 30+ validated experiments shipped across high-traffic DTC storefronts.</p>
+          <div class="ai-tags">
+            <span class="ai-tag">A/B Testing</span>
+            <span class="ai-tag">Multivariate Testing</span>
+            <span class="ai-tag">Statistical Significance</span>
+            <span class="ai-tag">Bayesian Analysis</span>
+            <span class="ai-tag">VWO</span>
+            <span class="ai-tag">Revenue Attribution</span>
+          </div>
+        </div>
+
+        <div class="ai-card">
+          <div class="ai-card-icon">
+            <svg fill="none" viewBox="0 0 24 24" stroke-width="1.75" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M2.25 18 9 11.25l4.306 4.306a11.95 11.95 0 0 1 5.814-5.518l2.74-1.22m0 0-5.94-2.281m5.94 2.28-2.28 5.941" /></svg>
+          </div>
+          <div class="ai-card-title">Conversion Rate Optimisation (CRO)</div>
+          <p class="ai-card-body">Systematic, data-led conversion optimisation — auditing the full purchase funnel from landing to post-checkout, identifying friction points through qualitative and quantitative evidence, implementing targeted interventions, and measuring impact with statistical rigour. This is the exact playbook that delivered a 50% year-over-year revenue lift at a US Brand.</p>
+          <div class="ai-tags">
+            <span class="ai-tag">CRO Strategy</span>
+            <span class="ai-tag">Funnel Audits</span>
+            <span class="ai-tag">PDP Optimisation</span>
+            <span class="ai-tag">Cart &amp; Checkout CRO</span>
+            <span class="ai-tag">Heatmaps</span>
+            <span class="ai-tag">Session Recording</span>
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- 05 · Services -->
     <section id="services" class="doc-section">
-      <div class="doc-anchor"><span class="doc-anchor-num">04</span> services</div>
-      <h2 class="doc-h2">Three ways we can work together.</h2>
+      <div class="doc-anchor"><span class="doc-anchor-num">05</span> services</div>
+      <h2 class="doc-h2">Four ways we can work together.</h2>
       <div class="services-table">
+
         <article class="service-row">
           <div class="service-row-head">
             <div class="service-id">/01</div>
             <div class="service-content">
               <h3>Shopify Speed Optimization</h3>
-              <p class="service-desc">A faster store converts better. I audit, refactor, and rebuild the parts of your theme dragging down Lighthouse and Core Web Vitals. Includes a full performance report with before/after metrics.</p>
+              <p class="service-desc">A faster store converts better. I audit, refactor, and rebuild the parts of your theme dragging down Lighthouse and Core Web Vitals scores. Includes a full performance report with before/after metrics.</p>
               <div class="service-tags"><span>Lighthouse</span><span>Core Web Vitals</span><span>Theme Refactor</span><span>Asset Optimization</span></div>
             </div>
             <button class="pricing-toggle" data-target="pricing-1" aria-expanded="false">View pricing<svg fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="m19.5 8.25-7.5 7.5-7.5-7.5" /></svg></button>
@@ -701,13 +675,14 @@
             </div>
           </div>
         </article>
+
         <article class="service-row">
           <div class="service-row-head">
             <div class="service-id">/02</div>
             <div class="service-content">
               <h3>CRO &amp; A/B Testing Engagement</h3>
-              <p class="service-desc">Monthly conversion optimization. Hypothesis development, test setup, implementation, and weekly reporting with revenue impact. The same playbook that drove a 50% Q4 lift at ZulayKitchen.</p>
-              <div class="service-tags"><span>CRO</span><span>A/B Testing</span><span>Funnel Audits</span><span>Weekly Reporting</span></div>
+              <p class="service-desc">Monthly conversion optimisation retainer. Behavioral data analysis, hypothesis development, experiment design and implementation, statistical significance analysis, and weekly reporting with direct revenue attribution. The same methodology that drove a 50% for the US brand.</p>
+              <div class="service-tags"><span>CRO</span><span>A/B Testing</span><span>Data Analysis</span><span>Funnel Audits</span><span>Weekly Reporting</span></div>
             </div>
             <button class="pricing-toggle" data-target="pricing-2" aria-expanded="false">View pricing<svg fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="m19.5 8.25-7.5 7.5-7.5-7.5" /></svg></button>
           </div>
@@ -719,17 +694,37 @@
             </div>
           </div>
         </article>
+
         <article class="service-row">
           <div class="service-row-head">
             <div class="service-id">/03</div>
             <div class="service-content">
-              <h3>Custom Shopify Development</h3>
-              <p class="service-desc">Whatever the platform doesn't do out of the box custom apps, Checkout Extensibility, headless storefronts on Hydrogen, full theme builds, and store migrations. Scoped per project.</p>
-              <div class="service-tags"><span>Custom Apps</span><span>Checkout Ext</span><span>Hydrogen</span><span>Migrations</span><span>Theme Builds</span></div>
+              <h3>AI Integration &amp; Automation</h3>
+              <p class="service-desc">Embedding AI capabilities into your commerce stack — LLM-powered product search, conversational customer support, AI-generated content pipelines, automated data analysis workflows, and intelligent personalisation engines. Scoped to your specific use case and existing infrastructure.</p>
+              <div class="service-tags"><span class="tag-ai">LLM Integration</span><span class="tag-ai">RAG Pipelines</span><span class="tag-ai">AI Agents</span><span class="tag-ai">Workflow Automation</span><span>OpenAI</span><span>Anthropic</span></div>
             </div>
             <button class="pricing-toggle" data-target="pricing-3" aria-expanded="false">View pricing<svg fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="m19.5 8.25-7.5 7.5-7.5-7.5" /></svg></button>
           </div>
           <div class="pricing-panel" id="pricing-3">
+            <div class="pricing-inner">
+              <div class="pricing-block"><span class="pricing-prefix">From</span><span class="pricing-num">$2,000</span></div>
+              <span class="pricing-meta">Scoped per integration · Ongoing retainer available</span>
+              <a href="mailto:zowhair@gmail.com?subject=AI%20Integration%20Inquiry" class="pricing-cta">Start a project<svg fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M13.5 4.5 21 12m0 0-7.5 7.5M21 12H3" /></svg></a>
+            </div>
+          </div>
+        </article>
+
+        <article class="service-row">
+          <div class="service-row-head">
+            <div class="service-id">/04</div>
+            <div class="service-content">
+              <h3>Custom Shopify Development</h3>
+              <p class="service-desc">Whatever the platform doesn't do out of the box — custom apps, Checkout Extensibility, headless storefronts on Hydrogen, full theme builds, and store migrations. Scoped per project.</p>
+              <div class="service-tags"><span>Custom Apps</span><span>Checkout Ext</span><span>Hydrogen</span><span>Migrations</span><span>Theme Builds</span></div>
+            </div>
+            <button class="pricing-toggle" data-target="pricing-4" aria-expanded="false">View pricing<svg fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="m19.5 8.25-7.5 7.5-7.5-7.5" /></svg></button>
+          </div>
+          <div class="pricing-panel" id="pricing-4">
             <div class="pricing-inner">
               <div class="pricing-block"><span class="pricing-prefix">From</span><span class="pricing-num">$2,500</span></div>
               <span class="pricing-meta">Timeline scoped to project</span>
@@ -737,29 +732,32 @@
             </div>
           </div>
         </article>
+
       </div>
     </section>
 
+    <!-- 06 · Stack -->
     <section id="stack" class="doc-section">
-      <div class="doc-anchor"><span class="doc-anchor-num">05</span> stack</div>
+      <div class="doc-anchor"><span class="doc-anchor-num">06</span> stack</div>
       <h2 class="doc-h2">A toolkit sharpened over six years.</h2>
       <div class="stack-grid">
         <div class="stack-item"><div class="stack-key">Languages</div><div class="stack-val">JavaScript (ES6+), TypeScript, HTML5, CSS3, PHP, Python</div></div>
         <div class="stack-item"><div class="stack-key">Frontend</div><div class="stack-val">React, Next.js (App Router), Remix, Tailwind CSS, Polaris</div></div>
         <div class="stack-item"><div class="stack-key">Backend</div><div class="stack-val">Node.js, NestJS, Express, Laravel</div></div>
         <div class="stack-item"><div class="stack-key">Shopify</div><div class="stack-val">Liquid, Themes, App Extensions, Checkout Extensibility, App Functions, Hydrogen, GraphQL APIs</div></div>
-        <div class="stack-item"><div class="stack-key">Databases</div><div class="stack-val">PostgreSQL, MySQL, MongoDB</div></div>
-        <div class="stack-item"><div class="stack-key">APIs &amp; Integrations</div><div class="stack-val">REST, GraphQL, Webhooks, Stripe, third-party SaaS APIs</div></div>
-        <div class="stack-item"><div class="stack-key">DevOps &amp; Tools</div><div class="stack-val">Git, Linux, Nginx, PM2, Vercel, CI/CD, Lighthouse tooling</div></div>
-        <div class="stack-item"><div class="stack-key">AI &amp; Automation</div><div class="stack-val">OpenAI &amp; Anthropic APIs, RAG, LLM agents, workflow automation</div></div>
+        <div class="stack-item"><div class="stack-key ai-key">AI &amp; LLMs</div><div class="stack-val">OpenAI API, Anthropic API (Claude), RAG architectures, LangChain, vector databases (Pinecone), prompt engineering, LLM agents</div></div>
+        <div class="stack-item"><div class="stack-key ai-key">Data &amp; Analytics</div><div class="stack-val">Python, Pandas, NumPy, GA4, Mixpanel, Segment, Hotjar, heatmap &amp; session analysis, VWO, A/B experimentation platforms</div></div>
+        <div class="stack-item"><div class="stack-key">Databases</div><div class="stack-val">PostgreSQL, MySQL, MongoDB, Pinecone (vector)</div></div>
+        <div class="stack-item"><div class="stack-key">DevOps &amp; Tools</div><div class="stack-val">Git, Linux, Nginx, PM2, Vercel, CI/CD pipelines, Lighthouse tooling</div></div>
       </div>
     </section>
 
+    <!-- 07 · Contact -->
     <section id="contact" class="doc-section">
-      <div class="doc-anchor"><span class="doc-anchor-num">06</span> contact</div>
+      <div class="doc-anchor"><span class="doc-anchor-num">07</span> contact</div>
       <h2 class="doc-h2">Let's build something good.</h2>
       <div class="contact-block">
-        <p style="color: var(--ink-2); font-size: 15px; line-height: 1.65;">Open to senior full-time roles, contract work, and select projects. Email is fastest I read everything and reply within a day.</p>
+        <p style="color: var(--ink-2); font-size: 15px; line-height: 1.65;">Open to senior full-time roles, contract work, and select projects — across Shopify engineering, AI integration, and data-driven CRO. Email is fastest; I read everything and reply within a day.</p>
         <div class="contact-channels">
           <a href="mailto:zowhair@gmail.com" class="contact-channel">
             <span class="contact-channel-icon">
@@ -788,15 +786,15 @@
               <span class="contact-channel-val">github.com/zowhair</span>
             </span>
           </a>
-          <!-- <a href="/resume.pdf" target="_blank" rel="noopener" class="contact-channel">
+          <a href="https://x.com/zowhair" target="_blank" rel="noopener" class="contact-channel">
             <span class="contact-channel-icon">
-              <svg fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M3 16.5v2.25A2.25 2.25 0 0 0 5.25 21h13.5A2.25 2.25 0 0 0 21 18.75V16.5M16.5 12 12 16.5m0 0L7.5 12m4.5 4.5V3" /></svg>
+              <svg fill="currentColor" viewBox="0 0 24 24"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-4.714-6.231-5.401 6.231H2.747l7.73-8.835L1.254 2.25H8.08l4.264 5.633 5.9-5.633Zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg>
             </span>
             <span class="contact-channel-text">
-              <span class="contact-channel-label">Resume</span>
-              <span class="contact-channel-val">Download CV (PDF)</span>
+              <span class="contact-channel-label">X / Twitter</span>
+              <span class="contact-channel-val">x.com/zowhair</span>
             </span>
-          </a> -->
+          </a>
         </div>
       </div>
     </section>
@@ -810,33 +808,36 @@
 </div>
 
 <script>
+  // Pricing toggles
   document.querySelectorAll('.pricing-toggle').forEach(btn => {
-    btn.addEventListener('click', (e) => {
+    btn.addEventListener('click', e => {
       e.preventDefault();
       const targetId = btn.getAttribute('data-target');
       const panel = document.getElementById(targetId);
       const isOpen = btn.getAttribute('aria-expanded') === 'true';
       document.querySelectorAll('.pricing-panel').forEach(p => { if (p.id !== targetId) p.classList.remove('open'); });
       document.querySelectorAll('.pricing-toggle').forEach(b => { if (b !== btn) b.setAttribute('aria-expanded', 'false'); });
-      if (isOpen) { panel.classList.remove('open'); btn.setAttribute('aria-expanded', 'false'); }
-      else { panel.classList.add('open'); btn.setAttribute('aria-expanded', 'true'); }
+      panel.classList.toggle('open', !isOpen);
+      btn.setAttribute('aria-expanded', String(!isOpen));
     });
   });
 
-  const els = document.querySelectorAll('.doc-section, .reveal, .reveal-stagger, .hero');
-  els.forEach(el => {
+  // Scroll reveal
+  const revealEls = document.querySelectorAll('.doc-section, .reveal, .reveal-stagger, .hero');
+  revealEls.forEach(el => {
     if (!el.classList.contains('reveal') && !el.classList.contains('reveal-stagger')) el.classList.add('reveal');
   });
-  const io = new IntersectionObserver((entries) => {
+  const io = new IntersectionObserver(entries => {
     entries.forEach(entry => {
       if (entry.isIntersecting) { entry.target.classList.add('visible'); io.unobserve(entry.target); }
     });
   }, { threshold: 0.05, rootMargin: '0px 0px -40px 0px' });
-  els.forEach(el => io.observe(el));
+  revealEls.forEach(el => io.observe(el));
 
+  // Count-up animation
   const animateCount = (el, target, duration = 1300) => {
     const start = performance.now();
-    const step = (now) => {
+    const step = now => {
       const progress = Math.min((now - start) / duration, 1);
       const eased = 1 - Math.pow(1 - progress, 3);
       el.textContent = Math.round(target * eased);
@@ -845,7 +846,7 @@
     };
     requestAnimationFrame(step);
   };
-  const statObserver = new IntersectionObserver((entries) => {
+  const statObserver = new IntersectionObserver(entries => {
     entries.forEach(entry => {
       if (entry.isIntersecting) {
         const target = parseInt(entry.target.getAttribute('data-count'), 10);
@@ -856,15 +857,12 @@
   }, { threshold: 0.4 });
   document.querySelectorAll('[data-count]').forEach(el => statObserver.observe(el));
 
+  // Active nav section tracking
   const sections = document.querySelectorAll('section[id]');
   const railLinks = document.querySelectorAll('.rail-link');
-  const setActive = (id) => {
-    railLinks.forEach(l => l.classList.toggle('active', l.dataset.target === id));
-  };
-  const navObserver = new IntersectionObserver((entries) => {
-    entries.forEach(entry => {
-      if (entry.isIntersecting) setActive(entry.target.id);
-    });
+  const setActive = id => railLinks.forEach(l => l.classList.toggle('active', l.dataset.target === id));
+  const navObserver = new IntersectionObserver(entries => {
+    entries.forEach(entry => { if (entry.isIntersecting) setActive(entry.target.id); });
   }, { rootMargin: '-30% 0px -60% 0px' });
   sections.forEach(s => navObserver.observe(s));
 </script>
