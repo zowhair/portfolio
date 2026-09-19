@@ -51,7 +51,7 @@ button { font: inherit; }
 .orb-two { width: 9rem; height: 9rem; right: 31%; bottom: 10%; background: rgba(255,105,72,.32); animation: float 7s ease-in-out -3s infinite reverse; }
 .hero-content, .hero-console { position: relative; z-index: 2; }
 .section-kicker {
-  display: none;
+  opacity: 0;
 }
 .eyebrow, .section-kicker { font: 500 .68rem var(--mono); text-transform: uppercase; letter-spacing: .1em; }
 .eyebrow { display: flex; align-items: center; gap: .7rem; color: var(--muted); margin-bottom: 2rem; }
