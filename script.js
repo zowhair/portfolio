@@ -66,40 +66,73 @@
     sections.forEach((section) => sectionObserver.observe(section));
   }
 
+  const finePointer = window.matchMedia("(pointer: fine)").matches;
+
   const glow = document.querySelector(".cursor-glow");
-  if (glow && !reduceMotion && window.matchMedia("(pointer: fine)").matches) {
+  if (glow && !reduceMotion && finePointer) {
     let currentX = window.innerWidth / 2;
     let currentY = window.innerHeight / 2;
     let targetX = currentX;
     let targetY = currentY;
-
-    window.addEventListener("pointermove", (event) => {
-      targetX = event.clientX;
-      targetY = event.clientY;
-    }, { passive: true });
+    let running = false;
 
     const moveGlow = () => {
       currentX += (targetX - currentX) * 0.12;
       currentY += (targetY - currentY) * 0.12;
       glow.style.left = `${currentX}px`;
       glow.style.top = `${currentY}px`;
+      // Stop the loop once the glow has caught up; restart on the next move.
+      if (Math.abs(targetX - currentX) < 0.5 && Math.abs(targetY - currentY) < 0.5) { running = false; return; }
       requestAnimationFrame(moveGlow);
     };
-    requestAnimationFrame(moveGlow);
+
+    window.addEventListener("pointermove", (event) => {
+      targetX = event.clientX;
+      targetY = event.clientY;
+      if (!running) { running = true; requestAnimationFrame(moveGlow); }
+    }, { passive: true });
   }
 
-  if (!reduceMotion && window.matchMedia("(pointer: fine)").matches) {
+  // Magnetic elements move via CSS variables, so they never fight hover transforms.
+  if (!reduceMotion && finePointer) {
     document.querySelectorAll(".magnetic").forEach((element) => {
       element.addEventListener("pointermove", (event) => {
         const rect = element.getBoundingClientRect();
         const x = event.clientX - rect.left - rect.width / 2;
         const y = event.clientY - rect.top - rect.height / 2;
-        element.style.transform = `translate(${x * 0.08}px, ${y * 0.12}px)`;
+        element.style.setProperty("--mx", `${(x * 0.08).toFixed(1)}px`);
+        element.style.setProperty("--my", `${(y * 0.12).toFixed(1)}px`);
       });
       element.addEventListener("pointerleave", () => {
-        element.style.transform = "translate(0, 0)";
+        element.style.setProperty("--mx", "0px");
+        element.style.setProperty("--my", "0px");
       });
     });
+  }
+
+  // Count up the hero numbers once they scroll into view. Final values are already in the HTML.
+  const counters = document.querySelectorAll("[data-count]");
+  if (!reduceMotion && counters.length && "IntersectionObserver" in window) {
+    const format = (el, n) => `${el.dataset.prefix || ""}${n}${el.dataset.suffix || ""}`;
+    const counterObserver = new IntersectionObserver((entries, observer) => {
+      entries.forEach((entry) => {
+        if (!entry.isIntersecting) return;
+        observer.unobserve(entry.target);
+        const el = entry.target;
+        const end = Number(el.dataset.count);
+        const duration = 1100;
+        const start = performance.now();
+        const tick = (now) => {
+          const t = Math.min((now - start) / duration, 1);
+          const eased = 1 - Math.pow(1 - t, 3);
+          el.textContent = format(el, Math.round(end * eased));
+          if (t < 1) requestAnimationFrame(tick);
+        };
+        el.textContent = format(el, 0);
+        requestAnimationFrame(tick);
+      });
+    }, { threshold: 0.6 });
+    counters.forEach((el) => counterObserver.observe(el));
   }
 
   const year = document.querySelector("[data-year]");
