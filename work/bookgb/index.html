@@ -1,0 +1,133 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#f7f7f2">
+  <title>BookGB case study — Muhammad Zuhair Askari</title>
+  <meta name="description" content="How I built BookGB, a booking platform for stays, cars with drivers and guided trips in Gilgit-Baltistan, Pakistan: one search over three kinds of listing, a host dashboard, and pages built to be found.">
+  <meta name="author" content="Muhammad Zuhair Askari">
+  <link rel="canonical" href="https://zowhair.com/work/bookgb/">
+  <meta property="og:type" content="article">
+  <meta property="og:url" content="https://zowhair.com/work/bookgb/">
+  <meta property="og:title" content="BookGB: stays, cars and trips in Gilgit-Baltistan">
+  <meta property="og:description" content="A booking platform for a mountain region: one search over three kinds of listing, a host dashboard, and destination guides built to be found. Case study by Muhammad Zuhair Askari.">
+  <meta property="og:image" content="https://zowhair.com/work/img/og-bookgb.png">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:site" content="@zowhair">
+  <meta name="twitter:image" content="https://zowhair.com/work/img/og-bookgb.png">
+  <link rel="icon" href="/favicon.ico">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/main.55431484.css">
+  <link rel="stylesheet" href="/work/case-study.css">
+</head>
+<body>
+  <a class="skip-link" href="#main">Skip to content</a>
+
+  <header class="site-header" data-header>
+    <a class="brand" href="/" aria-label="Zuhair Askari, home">
+      <span class="brand-mark">zowhair</span>
+      <span class="brand-copy">Zuhair<small>Full-stack &amp; AI engineer</small></span>
+    </a>
+    <button class="menu-toggle" type="button" aria-label="Open navigation" aria-expanded="false" aria-controls="site-nav"><span></span><span></span></button>
+    <nav class="site-nav" id="site-nav" aria-label="Primary navigation">
+      <a href="/#work">Work</a><a href="/#experience">Experience</a><a href="/#stack">Stack</a><a href="/#contact">Contact</a>
+    </nav>
+    <a class="header-cta magnetic" href="mailto:zowhair@gmail.com?subject=Engineering%20role">Let's talk <span>↗</span></a>
+  </header>
+
+  <main id="main">
+    <section class="case-hero section">
+      <div class="hero-grid" aria-hidden="true"></div>
+      <a class="case-back" href="/#work">← All work</a>
+      <p class="section-kicker">Case study 02 · Marketplace</p>
+      <h1 class="case-title">BookGB</h1>
+      <p class="case-lede">A booking platform for Gilgit-Baltistan, Pakistan. Travellers find hotels and guest houses, rent a car or jeep with or without a driver, and join guided trips, booking directly with the local people who run them.</p>
+      <dl class="tldr">
+        <div><dt>Role</dt><dd>Product and engineering: traveller web app, host dashboard, API integration, deployment</dd></div>
+        <div><dt>Timeline</dt><dd>First version July 2025; rebuilt on Next.js in 2026; redesigned November 2026</dd></div>
+        <div><dt>Stack</dt><dd>Next.js 16, React 19, TanStack Query, Redux Toolkit, React + Vite dashboard, REST API, Docker</dd></div>
+        <div><dt>Links</dt><dd><a href="https://bookgb.com" target="_blank" rel="noopener">bookgb.com ↗</a></dd></div>
+        <div class="tldr-results"><dt>Results</dt><dd><ul>
+          <li>Three kinds of listing (stays, vehicles, trips) behind one search</li>
+          <li>Lighthouse on mobile: SEO 100, accessibility 97, best practices 96</li>
+          <li>Destination guides for nine areas, each with its own metadata and structured data</li>
+        </ul></dd></div>
+      </dl>
+    </section>
+
+    <section class="case-body section">
+      <article class="prose">
+        <figure class="figure wide figure-pair">
+          <img src="/work/img/bookgb-desktop.webp" width="1200" height="750" alt="The bookgb.com home page: 'Hotels, cars & tours in Gilgit-Baltistan' with a search bar that switches between stays, cars and trips." loading="eager" fetchpriority="high">
+          <img class="figure-phone" src="/work/img/bookgb-mobile.webp" width="600" height="1298" alt="The bookgb.com home page at phone width." loading="lazy">
+          <figcaption>bookgb.com, desktop and phone. One search bar, three kinds of listing.</figcaption>
+        </figure>
+
+        <section>
+          <p class="section-kicker">The problem</p>
+          <h2>Great places, hard to book.</h2>
+          <p>Gilgit-Baltistan draws travellers to Hunza, Skardu, Fairy Meadows and the road to K2. Most of the people who host them are small: a family guest house, a driver with a jeep, a local guide. They're reached by phone, WhatsApp or word of mouth. Travellers can't compare options or see prices, and hosts can't be found by anyone who doesn't already know them.</p>
+          <p>The big booking sites don't fit either. They list few of these hosts, and they ask for online card payments that many local providers don't take.</p>
+        </section>
+
+        <section>
+          <p class="section-kicker">Architecture</p>
+          <h2>Two front ends on one booking API.</h2>
+          <p>The traveller site is a Next.js App Router app. Search and listing data come from a REST booking API through TanStack Query, and Redux Toolkit holds the search state that crosses pages. Hosts, drivers and operators manage their listings in a separate React + Vite dashboard with role-based navigation and a verification queue for new rooms and vehicles. Both are Docker images deployed to a VPS.</p>
+          <p><strong>Product decision: book direct, confirm with the provider.</strong> A booking request goes to the host, who confirms it, and prices are shown in rupees. That fits how the region already works, where many providers deal in cash and confirm by phone. It keeps the platform from being a payments business on day one. The trade-off is that availability is confirmed by a person, not guaranteed instantly. Verified badges and vehicle inspection scores help build the trust that instant payment would otherwise provide.</p>
+        </section>
+
+        <section>
+          <p class="section-kicker">Hard problem 1</p>
+          <h2>One search over three different things.</h2>
+          <dl class="decision">
+            <div><dt>Problem</dt><dd>A stay is searched by dates and guests, a vehicle by seats, bags, transmission and whether it comes with a driver, a trip by departure. Each has different detail pages, prices and filters.</dd></div>
+            <div><dt>Decision</dt><dd>One search bar with a mode switch, separate typed request models for each listing type, and shared card and listing components where the shapes really are the same. Detail pages stay specific to each type.</dd></div>
+            <div><dt>What I found</dt><dd>I checked every call the web app makes against the API's OpenAPI spec (111 endpoints, 41 schemas). All matched except one: vehicle search was typed to accept the stay request model, so vehicle filters like seats and transmission could be silently ignored. That kind of drift is invisible in the UI, because the filters look like they work. Checking the client against the spec is now part of how I change it.</dd></div>
+          </dl>
+        </section>
+
+        <section>
+          <p class="section-kicker">Hard problem 2</p>
+          <h2>Getting found, by people and by AI assistants.</h2>
+          <dl class="decision">
+            <div><dt>Problem</dt><dd>The first version was a client-rendered React single-page app. Search engines and link previews saw an almost empty page. That matters for a travel site, where people start by searching "Hunza hotels" or asking an assistant where to stay.</dd></div>
+            <div><dt>Decision</dt><dd>I rebuilt the site on Next.js. Every listing and destination page is server-rendered with its own title, description and Open Graph image. The site also generates a sitemap, robots rules and structured data, and has an <code>llms.txt</code> summary for AI assistants. Destination photos are Creative Commons images, each credited in the caption and on a credits page.</dd></div>
+            <div><dt>Result</dt><dd>On mobile, Lighthouse scores the home page 100 for SEO, 97 for accessibility and 96 for best practices.</dd></div>
+          </dl>
+        </section>
+
+        <section>
+          <p class="section-kicker">What's next</p>
+          <h2>Faster on mountain networks.</h2>
+          <ul>
+            <li><strong>Performance on weak connections.</strong> Mobile Lighthouse performance is 64, with a 3.2-second largest paint. Many visitors are on patchy mobile data in the valleys, so smaller hero images and less client JavaScript on the first page are the next priority.</li>
+            <li><strong>Instant availability</strong> for hosts who keep their calendars up to date, alongside request-to-book for everyone else.</li>
+            <li><strong>Contract tests</strong> that run the API spec check in CI instead of by hand.</li>
+          </ul>
+        </section>
+
+        <section>
+          <p class="section-kicker">Stack</p>
+          <ul class="stack-list">
+            <li>Next.js 16</li><li>React 19</li><li>TypeScript</li><li>TanStack Query</li><li>Redux Toolkit</li><li>Tailwind CSS</li><li>React + Vite</li><li>REST / OpenAPI</li><li>Docker</li>
+          </ul>
+        </section>
+      </article>
+    </section>
+
+    <nav class="case-next section" aria-label="Next case study">
+      <p>Next case study</p>
+      <a class="big" href="/work/expedition-asia/">Expedition Asia <span>↗</span></a>
+    </nav>
+  </main>
+
+  <footer class="site-footer"><span>© <span data-year>2026</span> Muhammad Zuhair Askari</span><span>Full-stack &amp; AI engineer</span><a href="/">Home ↑</a></footer>
+  <script src="/script.js" defer></script>
+</body>
+</html>

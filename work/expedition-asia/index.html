@@ -1,0 +1,144 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#f7f7f2">
+  <title>Expedition Asia case study — Muhammad Zuhair Askari</title>
+  <meta name="description" content="Client work: how I built and run the website and content system for Expedition Asia, a trekking and tour operator in Skardu, Pakistan. Tours, itineraries, bookings and a journal, all managed by the team.">
+  <meta name="author" content="Muhammad Zuhair Askari">
+  <link rel="canonical" href="https://zowhair.com/work/expedition-asia/">
+  <meta property="og:type" content="article">
+  <meta property="og:url" content="https://zowhair.com/work/expedition-asia/">
+  <meta property="og:title" content="Expedition Asia: a tour operator's site, run from its own CMS">
+  <meta property="og:description" content="Client work for a Skardu trekking and tour operator: a Next.js site with a custom CMS for tours, itineraries, bookings and a journal. Case study by Muhammad Zuhair Askari.">
+  <meta property="og:image" content="https://zowhair.com/work/img/og-expedition-asia.png">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:site" content="@zowhair">
+  <meta name="twitter:image" content="https://zowhair.com/work/img/og-expedition-asia.png">
+  <link rel="icon" href="/favicon.ico">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/main.55431484.css">
+  <link rel="stylesheet" href="/work/case-study.css">
+</head>
+<body>
+  <a class="skip-link" href="#main">Skip to content</a>
+
+  <header class="site-header" data-header>
+    <a class="brand" href="/" aria-label="Zuhair Askari, home">
+      <span class="brand-mark">zowhair</span>
+      <span class="brand-copy">Zuhair<small>Full-stack &amp; AI engineer</small></span>
+    </a>
+    <button class="menu-toggle" type="button" aria-label="Open navigation" aria-expanded="false" aria-controls="site-nav"><span></span><span></span></button>
+    <nav class="site-nav" id="site-nav" aria-label="Primary navigation">
+      <a href="/#work">Work</a><a href="/#experience">Experience</a><a href="/#stack">Stack</a><a href="/#contact">Contact</a>
+    </nav>
+    <a class="header-cta magnetic" href="mailto:zowhair@gmail.com?subject=Engineering%20role">Let's talk <span>↗</span></a>
+  </header>
+
+  <main id="main">
+    <section class="case-hero section">
+      <div class="hero-grid" aria-hidden="true"></div>
+      <a class="case-back" href="/#work">← All work</a>
+      <p class="section-kicker">Case study 03 · Client work</p>
+      <h1 class="case-title">Expedition Asia</h1>
+      <p class="case-lede">The website and content system for a trekking and tour operator based in Skardu, Pakistan, guiding in the Karakoram since 2003. The team publishes tours, itineraries and journal posts and handles booking enquiries without needing a developer.</p>
+      <dl class="tldr">
+        <div><dt>Role</dt><dd>Sole developer: design build, CMS, admin, SEO, hosting and ongoing support</dd></div>
+        <div><dt>Timeline</dt><dd>First site early 2024; CMS and admin 2026; redesign and move to a new server in autumn 2026</dd></div>
+        <div><dt>Stack</dt><dd>Next.js 14, Prisma 7, PostgreSQL 17, NextAuth, Nodemailer, Docker, Caddy</dd></div>
+        <div><dt>Links</dt><dd><a href="https://expeditionasiaa.com" target="_blank" rel="noopener">expeditionasiaa.com ↗</a></dd></div>
+        <div class="tldr-results"><dt>Results</dt><dd><ul>
+          <li>Tours, itineraries, bookings and blog all editable by the team in their own admin</li>
+          <li>Lighthouse on mobile: SEO 100, accessibility 97, best practices 96</li>
+          <li>Runs in Docker beside other apps on a shared server, with CPU and memory limits</li>
+        </ul></dd></div>
+      </dl>
+    </section>
+
+    <section class="case-body section">
+      <article class="prose">
+        <figure class="figure figure-phone">
+          <img src="/work/img/expedition-asia-mobile.webp" width="600" height="728" alt="Expedition Asia's site on a phone: four headline numbers about the company, then the 'Four ways to discover Pakistan' tour categories, starting with Trekking Tours." loading="eager" fetchpriority="high">
+          <figcaption>expeditionasiaa.com on a phone: company facts and the tour catalogue.</figcaption>
+        </figure>
+
+        <section>
+          <p class="section-kicker">The problem</p>
+          <h2>A catalogue that changes every season.</h2>
+          <p>Expedition Asia runs trekking, cultural, mixed and special tours, from K2 Base Camp to helicopter safaris. Prices, departures and itineraries change every season. The first version of the site kept tours in code, so every price update or new trip went through me. That was slow for the team and a poor use of a developer.</p>
+          <p>Enquiries also arrived in several places, by email, WhatsApp and forms, with no single list of who had asked about what.</p>
+        </section>
+
+        <section>
+          <p class="section-kicker">Architecture</p>
+          <h2>A small CMS shaped like the business.</h2>
+          <p>The site is a Next.js App Router app on Postgres through Prisma. Instead of a generic headless CMS, the data model mirrors how the team thinks about their work:</p>
+          <ul>
+            <li><strong>Tour:</strong> a unique slug, one of four categories, and a published flag, so drafts never reach the public site.</li>
+            <li><strong>Itinerary day:</strong> ordered days, each with its own steps, deleted together with the tour.</li>
+            <li><strong>Booking:</strong> every enquiry is stored and moves through new → contacted → confirmed or cancelled. The office also gets an email.</li>
+            <li><strong>Journal post:</strong> articles with cover images and a published flag.</li>
+          </ul>
+          <p>The admin uses credential login with hashed passwords. There's no sign-up page; admin accounts are created by a script, which leaves one less public form to attack. Public pages only ever query published content.</p>
+        </section>
+
+        <section>
+          <p class="section-kicker">Hard problem 1</p>
+          <h2>Moving from hard-coded pages to a CMS without breaking anything.</h2>
+          <dl class="decision">
+            <div><dt>Problem</dt><dd>Every tour and post lived in static data files that the components read directly, and the live site's URLs were already indexed by search engines.</dd></div>
+            <div><dt>Decision</dt><dd>I wrote a one-off seed that loaded the existing tours and posts into the new tables, then switched the pages to the database while keeping the same slugs and URLs. The legacy field names stayed inside the product components so the migration didn't turn into a rewrite.</dd></div>
+            <div><dt>Result</dt><dd>The team now adds tours, changes prices and publishes journal posts on their own, and the URLs search engines already knew kept working.</dd></div>
+          </dl>
+        </section>
+
+        <section>
+          <p class="section-kicker">Hard problem 2</p>
+          <h2>A good neighbour on a shared server.</h2>
+          <dl class="decision">
+            <div><dt>Problem</dt><dd>In 2026 the site moved to a new server it shares with other production apps behind one reverse proxy. A noisy or misnamed container on that box can slow down, or even take over, its neighbours.</dd></div>
+            <div><dt>Decision</dt><dd>The site runs as its own Docker Compose project with explicit CPU and memory limits and log rotation, and publishes no ports. The proxy reaches it through a project-prefixed network alias that can't collide with other apps. Images are built on my machine, tagged with the git commit and shipped to the server, so the server never compiles anything. The build doesn't need a database, which keeps it reproducible.</dd></div>
+            <div><dt>Result</dt><dd>Deploys are a single script, rollbacks mean running the previous commit's image, and the site's load stays within its own limits.</dd></div>
+          </dl>
+        </section>
+
+        <section>
+          <p class="section-kicker">What's next</p>
+          <h2>Images first.</h2>
+          <ul>
+            <li><strong>Image pipeline.</strong> The site is photo-heavy, and its mobile Lighthouse performance score is 46. Large original photos are resized on demand by a CPU-limited container. Resizing them once at upload and serving fixed sizes from a CDN is the biggest win available.</li>
+            <li><strong>Enquiry tracking.</strong> Bringing WhatsApp and email enquiries into the same booking list as web forms.</li>
+            <li><strong>Tests</strong> around the booking flow and the admin, which currently rely on manual checks.</li>
+          </ul>
+        </section>
+
+        <!-- Client testimonial slot: add the approved quote here once Expedition Asia signs it off.
+        <section>
+          <p class="section-kicker">From the client</p>
+          <blockquote class="callout"><p>“…”</p><p>— Name, Role, Expedition Asia</p></blockquote>
+        </section> -->
+
+        <section>
+          <p class="section-kicker">Stack</p>
+          <ul class="stack-list">
+            <li>Next.js 14</li><li>React</li><li>TypeScript</li><li>Prisma 7</li><li>PostgreSQL 17</li><li>NextAuth</li><li>Nodemailer</li><li>Docker Compose</li><li>Caddy</li>
+          </ul>
+        </section>
+      </article>
+    </section>
+
+    <nav class="case-next section" aria-label="Next case study">
+      <p>Back to the start</p>
+      <a class="big" href="/work/akteora/">Akteora <span>↗</span></a>
+    </nav>
+  </main>
+
+  <footer class="site-footer"><span>© <span data-year>2026</span> Muhammad Zuhair Askari</span><span>Full-stack &amp; AI engineer</span><a href="/">Home ↑</a></footer>
+  <script src="/script.js" defer></script>
+</body>
+</html>

@@ -1,0 +1,248 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#f7f7f2">
+  <title>Akteora case study — Muhammad Zuhair Askari</title>
+  <meta name="description" content="How I designed and built Akteora alone: a multi-tenant testimonial platform with direct-to-storage uploads, an FFmpeg reel pipeline on a 2-core server, and AI that selects real moments but never writes words.">
+  <meta name="author" content="Muhammad Zuhair Askari">
+  <link rel="canonical" href="https://zowhair.com/work/akteora/">
+  <meta property="og:type" content="article">
+  <meta property="og:url" content="https://zowhair.com/work/akteora/">
+  <meta property="og:title" content="Akteora: testimonials in, captioned reels out">
+  <meta property="og:description" content="A multi-tenant testimonial platform with a media pipeline on a 2-core server and AI that selects real moments but never writes words. Case study by Muhammad Zuhair Askari.">
+  <meta property="og:image" content="https://zowhair.com/work/img/og-akteora.png">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:site" content="@zowhair">
+  <meta name="twitter:image" content="https://zowhair.com/work/img/og-akteora.png">
+  <link rel="icon" href="/favicon.ico">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/main.55431484.css">
+  <link rel="stylesheet" href="/work/case-study.css">
+</head>
+<body>
+  <a class="skip-link" href="#main">Skip to content</a>
+
+  <header class="site-header" data-header>
+    <a class="brand" href="/" aria-label="Zuhair Askari, home">
+      <span class="brand-mark">zowhair</span>
+      <span class="brand-copy">Zuhair<small>Full-stack &amp; AI engineer</small></span>
+    </a>
+    <button class="menu-toggle" type="button" aria-label="Open navigation" aria-expanded="false" aria-controls="site-nav"><span></span><span></span></button>
+    <nav class="site-nav" id="site-nav" aria-label="Primary navigation">
+      <a href="/#work">Work</a><a href="/#experience">Experience</a><a href="/#stack">Stack</a><a href="/#contact">Contact</a>
+    </nav>
+    <a class="header-cta magnetic" href="mailto:zowhair@gmail.com?subject=Engineering%20role">Let's talk <span>↗</span></a>
+  </header>
+
+  <main id="main">
+    <section class="case-hero section">
+      <div class="hero-grid" aria-hidden="true"></div>
+      <a class="case-back" href="/#work">← All work</a>
+      <p class="section-kicker">Case study 01 · Founder-led SaaS</p>
+      <h1 class="case-title">Akteora</h1>
+      <p class="case-lede">A multi-tenant testimonial platform. Customers record video, audio or text from a link with no sign-up. Businesses approve them and publish them as website widgets, a public wall, or captioned reels in three aspect ratios. AI picks the strongest moments but never writes a word.</p>
+      <dl class="tldr">
+        <div><dt>Role</dt><dd>Sole founder and engineer: product, architecture, code, infrastructure</dd></div>
+        <div><dt>Timeline</dt><dd>Designed August 2026, first commit 8 Sep, in production the next day, built out through November (part-time)</dd></div>
+        <div><dt>Stack</dt><dd>NestJS, Postgres, BullMQ, FFmpeg, Whisper, OpenAI, Preact, React, Next.js, Cloudflare R2</dd></div>
+        <div><dt>Links</dt><dd><a href="https://akteora.com" target="_blank" rel="noopener">akteora.com ↗</a></dd></div>
+        <div class="tldr-results"><dt>Results</dt><dd><ul>
+          <li>Recording page ships in 23.6 KB of JavaScript, under a 40 KB budget that CI enforces</li>
+          <li>Video processing runs on a 2-core server without slowing the API: health checks stayed under 150 ms during a live transcode</li>
+          <li>About 1,700 automated tests, including tenant-isolation proofs for every table</li>
+        </ul></dd></div>
+      </dl>
+    </section>
+
+    <section class="case-body section">
+      <article class="prose">
+        <figure class="figure wide figure-pair">
+          <img src="/work/img/akteora-desktop.webp" width="1200" height="750" alt="The akteora.com home page: the headline 'Collect video testimonials with one link' next to a sample story studio showing a video story, a voice note and a brand reel ready to publish." loading="eager" fetchpriority="high">
+          <img class="figure-phone" src="/work/img/akteora-mobile.webp" width="600" height="1298" alt="The same akteora.com page at phone width." loading="lazy">
+          <figcaption>akteora.com, desktop and phone. The product visuals on the site use labelled sample content.</figcaption>
+        </figure>
+
+        <section>
+          <p class="section-kicker">The problem</p>
+          <h2>Praise is easy to get and hard to use.</h2>
+          <p>Small businesses and agencies hear good things from customers all the time, in emails, DMs and on calls. Turning that into something they can publish is the hard part. Customers won't install an app or create an account to leave a testimonial. Editing a phone video into a captioned clip takes hours.</p>
+          <p>Existing tools mostly solve the collecting. The obvious next step, letting AI "improve" what the customer said, became a legal problem in October 2024. The US FTC's rule on consumer reviews bans AI-generated testimonials, and it covers the platforms that help make them. I wanted the editing done automatically without changing anything a customer said.</p>
+        </section>
+
+        <section>
+          <p class="section-kicker">My role and constraints</p>
+          <h2>One person, part-time, one small server.</h2>
+          <p>I built Akteora alone. That covers the product decisions, sixteen written architecture decision records, the code and the operations. The constraints shaped every decision:</p>
+          <ul>
+            <li><strong>One VPS with two CPU cores,</strong> shared with other sites. FFmpeg will happily use every core it can get.</li>
+            <li><strong>A recording page that has to load fast on a phone</strong> with a weak connection, because a customer who gives up is a testimonial lost for good.</li>
+            <li><strong>No team to catch mistakes,</strong> so the rules that matter had to be enforced by types, lint rules and CI rather than by memory.</li>
+          </ul>
+          <p>I planned the build as a sequence of small work orders, each with acceptance criteria. Then I implemented them one at a time with AI coding tools (Claude Code), and CI gates acted as the referee: nothing counted as done until lint, tests, build and the bundle-size check all passed.</p>
+        </section>
+
+        <section>
+          <p class="section-kicker">Architecture</p>
+          <h2>A modular monolith with media on its own path.</h2>
+          <p>There is one API process, one worker process, Postgres and Redis. I chose this over microservices because one person can't afford distributed-systems overhead before the first customer. The boundaries still live in code: domain logic is a pure package with no I/O. Only the database package can touch the database, and every query in it requires a tenant context. Importing the query builder anywhere else is a lint error.</p>
+          <div class="diagram" role="img" aria-label="Architecture diagram. Control path: dashboard and integrations call the NestJS API, which uses Postgres and queues jobs in Redis with BullMQ. Media path: the browser uploads bytes directly to Cloudflare R2 with presigned URLs; the worker reads from R2, runs FFmpeg, Whisper and the soundbite model, and writes renditions back to R2; widgets, walls and reels are served from the CDN.">
+            <div class="diagram-head"><span>Akteora</span><em>request path vs media path</em></div>
+            <div class="lanes">
+              <div class="lane">
+                <p class="lane-title"><b>A</b> · Control path (JSON only)</p>
+                <div class="dnode"><strong>Dashboard · API keys · Shopify app</strong><span>same public /v1 routes for all</span></div>
+                <div class="darrow">HTTPS + session or scoped key</div>
+                <div class="dnode"><strong>NestJS API</strong><span>auth · tenancy · quotas · webhooks</span></div>
+                <div class="darrow">tenant-scoped repositories</div>
+                <div class="dnode"><strong>Postgres</strong><span>org_id first in every index</span></div>
+                <div class="darrow">enqueue job</div>
+                <div class="dnode"><strong>Redis + BullMQ</strong><span>media · render · widgets · webhooks queues</span></div>
+              </div>
+              <div class="lane">
+                <p class="lane-title"><b>B</b> · Media path (bytes, never via API)</p>
+                <div class="dnode"><strong>Recording page</strong><span>Preact · 23.6 KB JS · no account</span></div>
+                <div class="darrow">presigned multipart PUT</div>
+                <div class="dnode"><strong>Cloudflare R2</strong><span>private originals, immutable</span></div>
+                <div class="darrow">worker reads directly</div>
+                <div class="dnode hot"><strong>Worker</strong><span>FFmpeg · Whisper · soundbite model · CPU gate</span></div>
+                <div class="darrow">renditions, reels, JSON docs</div>
+                <div class="dnode"><strong>Public bucket + CDN</strong><span>widgets · walls · shared reels</span></div>
+              </div>
+            </div>
+            <div class="diagram-foot">
+              <div class="dnode"><strong>Widget script</strong><span>reads a static JSON doc from the CDN</span></div>
+              <div class="dnode"><strong>Public walls</strong><span>Next.js, server-rendered, SEO markup</span></div>
+              <div class="dnode"><strong>Caddy</strong><span>TLS and routing for every app</span></div>
+            </div>
+          </div>
+          <p>A testimonial moves like this. The browser asks the API for a presigned upload URL, which is locked to a content type and size. It then streams the recording straight to object storage while the customer is still talking. The API only ever handles two small JSON requests and one row write per submission. The worker picks the file up and does the rest: it transcodes, transcribes with word-level timings, extracts sentiment and themes, and publishes.</p>
+        </section>
+
+        <section>
+          <p class="section-kicker">Hard problem 1</p>
+          <h2>Video rendering on two cores without slowing the website.</h2>
+          <dl class="decision">
+            <div><dt>Problem</dt><dd>A reel render runs FFmpeg for minutes: cutting clips, normalising loudness, burning captions, encoding three aspect ratios. The same two cores process every new testimonial and serve the recording page's two-second target.</dd></div>
+            <div><dt>Options</dt><dd>Renders as low-priority jobs on the main queue; a second server; or a shared CPU gate between two queues.</dd></div>
+            <div><dt>Decision</dt><dd>The worker gets one core and a concurrency of one. The API gets no CPU cap so it can burst. A separate render queue shares an in-process <code>CpuGate</code> with the media queue. A new testimonial always goes first. A render gives its slot back between stages (each cut, each card, each encode), so an incoming testimonial waits at most one stage. While it waits, the dashboard shows the render as "paused".</dd></div>
+            <div><dt>Trade-off</dt><dd>Renders take longer when traffic is busy, and the gate only works within one process. Moving to several workers means moving it into Redis, which is already planned.</dd></div>
+            <div><dt>Result</dt><dd>API health checks stayed under 150 ms during a real transcode in production. Every stage's output is cached under a hash of its inputs, so swapping one clip re-cuts only that clip. A ratio whose inputs didn't change isn't encoded again.</dd></div>
+          </dl>
+        </section>
+
+        <section>
+          <p class="section-kicker">Hard problem 2</p>
+          <h2>Keeping customer traffic away from the API.</h2>
+          <dl class="decision">
+            <div><dt>Problem</dt><dd>Widgets sit on customers' own sites: a Shopify store during a sale, a landing page in an ad campaign. If every page view called my API, their traffic spikes would become my outages, and my outages would break their pages.</dd></div>
+            <div><dt>Options</dt><dd>An API endpoint cached at the edge; a Cloudflare Worker assembling data per request; or prebuilt static documents.</dd></div>
+            <div><dt>Decision</dt><dd>Each widget is a static JSON document in the public bucket. The worker rebuilds it whenever something it shows could have changed, and only writes it when its SHA-256 differs. A bulk approval of 100 testimonials is one rebuild, debounced into a five-second window per organisation. The embed snippet reserves the widget's height before the script loads, and the script draws inside a shadow root.</dd></div>
+            <div><dt>Trade-off</dt><dd>Changes are prompt but not instant: a few seconds to rebuild, then up to a minute of browser cache. Changing a widget's layout means pasting a new snippet.</dd></div>
+            <div><dt>Result</dt><dd>Cumulative layout shift measured at 0. The script is 6.3 KB gzipped, sets no cookies and makes no third-party requests. Widgets keep working with the API, the database and the worker all down.</dd></div>
+          </dl>
+        </section>
+
+        <section>
+          <p class="section-kicker">Hard problem 3</p>
+          <h2>Tenant isolation that also gives you a free test mode.</h2>
+          <dl class="decision">
+            <div><dt>Problem</dt><dd>Agencies manage many brands, and integrators need a sandbox. The usual approach is a <code>livemode</code> flag on every table. That would have meant around 25 tables and every query touching them, and one missed filter leaks data between modes.</dd></div>
+            <div><dt>Decision</dt><dd>A test API key belongs to a sandbox organisation linked to the live one. Every repository already filters by organisation, and a test suite already proves no organisation can see another's rows. So test and live data are separated by the same mechanism that separates customers, with no query changed.</dd></div>
+            <div><dt>Trade-off</dt><dd>A sandbox is a real organisation row, so jobs that loop over all organisations must skip sandboxes where it matters. Test-mode media is really processed, with small caps on usage.</dd></div>
+            <div><dt>Result</dt><dd>Test mode behaves exactly like live mode by construction. Adding a table needs no test-mode work beyond the isolation test it already needs.</dd></div>
+          </dl>
+        </section>
+
+        <section>
+          <p class="section-kicker">Hard problem 4</p>
+          <h2>Three bugs that only showed up in production.</h2>
+          <p><strong>Another site took over my domain.</strong> All the sites on the server sit behind one Caddy reverse proxy on a shared Docker network. On 6 October 2026, another project's container, also named <code>web</code>, answered to that name. Docker's DNS handed Caddy whichever container it found first, and akteora.com started serving the wrong site. The fix: Caddy now proxies only to project-prefixed network aliases that can't collide. The other sites on the server follow the same rule.</p>
+          <p><strong>A rate limit that never fired.</strong> The per-organisation limit ran in a guard before authentication. It never knew which organisation was calling, so every request was limited by IP address only. I moved key- and organisation-level limits to after authentication: 300 requests a minute per key and 600 per organisation. Unknown keys from one address back off exponentially.</p>
+          <p><strong>Client IPs that could be faked.</strong> Caddy trusted <code>X-Forwarded-For</code> from private address ranges. On a shared network, any container could claim any IP and slip past per-address limits. Nothing legitimate sits in front of Caddy, so I removed the trust entirely.</p>
+        </section>
+
+        <section>
+          <p class="section-kicker">The AI part</p>
+          <h2>AI selects timestamps. It never writes testimonial words.</h2>
+          <div class="callout">
+            <p class="section-kicker">The trust rule</p>
+            <p>Every frame and every caption in a reel is something a real customer actually said. The database schema and the validation enforce this; it isn't just a policy.</p>
+          </div>
+          <p><strong>Transcription</strong> uses OpenAI's <code>whisper-1</code>. I chose it over newer models because it's the one that returns word-level timestamps, and the whole reel editor works on word boundaries. Sentiment and theme tags come from <code>gpt-4o-mini</code> on their own queue.</p>
+          <p><strong>Choosing soundbites</strong> works like this:</p>
+          <ul>
+            <li>The model receives transcripts with word timings and returns only <code>{submission_id, start_ms, end_ms, reason}</code>. The reason is shown to the operator in the editor and never appears in the video.</li>
+            <li>The prompt tells the model the transcripts are untrusted public input and that any instructions inside them must be ignored.</li>
+            <li>The prompt is versioned, so every clip can be traced back to what chose it.</li>
+          </ul>
+          <p><strong>The output is checked, not trusted.</strong> Each span must sit inside the real recording, start and end exactly on word boundaries, run 3 to 15 seconds, and use each testimonial at most once. A failing answer is sent back once with the reasons. A second failure, or no model at all, falls back to a deterministic rule that picks the densest span. A reel always renders.</p>
+          <p><strong>Captions</strong> are the transcript's own words, burned in with libass and also offered as a <code>.vtt</code> file. They are never regenerated or paraphrased.</p>
+          <p><strong>Text tidy-up</strong> (removing filler words, fixing punctuation) is stored as a separate revision. It can't be used until the customer approves it on a before-and-after diff before they submit. It's also rejected automatically if it changes the length too much or introduces names that weren't in the original. Originals are immutable through a database trigger, and one function is the only way to read displayed text. Operators can hide or delete a testimonial but can't edit the customer's words through any route.</p>
+          <p><strong>Cost and testing.</strong> Transcripts sent to the model are capped at 2,000 words each, and each reel needs one selection call, so the model bill stays small. Whisper is billed per audio minute ($0.006 at list price), so a one-minute testimonial costs well under a cent to transcribe. In CI, the whole AI path runs against a local fake server that speaks OpenAI's protocol, so tests never pay for or depend on the model.</p>
+        </section>
+
+        <section>
+          <p class="section-kicker">Reliability, security and operations</p>
+          <h2>Small box, real operations.</h2>
+          <ul>
+            <li><strong>Deploys:</strong> Docker Compose behind Caddy with automatic TLS. Readiness checks test Postgres and Redis, not just "process alive", so a deploy can't cut over to a container that only serves errors. Database migrations fail safely before cut-over.</li>
+            <li><strong>Backups:</strong> scripted backup and restore, tested by restoring into a scratch database.</li>
+            <li><strong>Server:</strong> firewall, fail2ban, key-only SSH and unattended security upgrades. The queue dashboard is reachable only through an SSH tunnel.</li>
+            <li><strong>Webhooks:</strong> signed with HMAC-SHA256 and stored before sending. Retries follow a fixed schedule over about 20 hours, and an endpoint is disabled after 24 hours of continuous failure. Every delivery is protected against SSRF: HTTPS only, public addresses checked on every connection, no redirects.</li>
+            <li><strong>API keys:</strong> stored as SHA-256 hashes and limited to eleven scopes. Each route declares its scope in one decorator, which also writes the OpenAPI spec, and a test fails if any route is left undecided.</li>
+            <li><strong>Consent and privacy:</strong> consent text is stored word for word with each testimonial, and the audit log is append-only. IP addresses are hashed, and logs carry no personal data. Erasing a customer also removes every reel and public copy they appear in.</li>
+            <li><strong>Payments:</strong> billing sits behind a provider interface. When two payment providers declined the store, switching to Stripe meant changing one module.</li>
+            <li><strong>Dependencies:</strong> a November audit took production dependencies from 4 critical and 17 high advisories to 0 critical, with 2 high left in dev-only tooling.</li>
+          </ul>
+        </section>
+
+        <section>
+          <p class="section-kicker">Results</p>
+          <h2>Where it stands.</h2>
+          <p>Akteora is live at akteora.com in early access, with a free plan. Its Shopify app is being submitted to the Shopify App Store. The engineering results, all measured:</p>
+          <ul>
+            <li>Recording page: 23.6 KB of gzipped JavaScript against a 40 KB budget that fails CI if exceeded. A lint rule bans React and analytics imports there.</li>
+            <li>Public testimonial walls: Lighthouse 100/100/100 on desktop and 95/100/100 on phone (performance, accessibility, SEO).</li>
+            <li>Widget: 6.3 KB gzipped, zero layout shift, no cookies.</li>
+            <li>Shared 2-core server: API health under 150 ms while FFmpeg transcodes.</li>
+            <li>About 1,700 automated tests, including Playwright end-to-end runs against the real stack and visual snapshots in both themes.</li>
+            <li>A public REST API with 11 developer guides, a docs site and a typed SDK.</li>
+          </ul>
+        </section>
+
+        <section>
+          <p class="section-kicker">What I'd do differently</p>
+          <h2>Next time, and next.</h2>
+          <ul>
+            <li><strong>Put it in front of real users sooner.</strong> I built the public API, webhooks and SDK before the first customer interviews. The engineering holds up, but a few weeks of customer feedback would have changed the order I built things in.</li>
+            <li><strong>Test on real phones earlier.</strong> The recording page has 16 end-to-end tests in CI, but iOS Safari and Android Chrome need their own device pass, because MediaRecorder behaves differently on each.</li>
+            <li><strong>Build an evaluation set for soundbite selection.</strong> Today the model's spans are validated for correctness, not judged for quality. The next step is a small labelled set of transcripts and a score for each prompt version.</li>
+            <li><strong>Move the CPU gate into Redis</strong> once renders need a second machine.</li>
+          </ul>
+        </section>
+
+        <section>
+          <p class="section-kicker">Stack</p>
+          <ul class="stack-list">
+            <li>TypeScript</li><li>NestJS (Fastify)</li><li>Zod</li><li>PostgreSQL 16</li><li>Drizzle</li><li>Redis / Valkey</li><li>BullMQ</li><li>FFmpeg</li><li>Whisper</li><li>OpenAI</li><li>Cloudflare R2 + CDN</li><li>Better Auth</li><li>Stripe</li><li>Preact</li><li>React</li><li>TanStack</li><li>Next.js</li><li>Playwright</li><li>Vitest</li><li>Docker Compose</li><li>Caddy</li><li>GitHub Actions</li><li>pnpm + Turborepo</li>
+          </ul>
+        </section>
+      </article>
+    </section>
+
+    <nav class="case-next section" aria-label="Next case study">
+      <p>Next case study</p>
+      <a class="big" href="/work/bookgb/">BookGB <span>↗</span></a>
+    </nav>
+  </main>
+
+  <footer class="site-footer"><span>© <span data-year>2026</span> Muhammad Zuhair Askari</span><span>Full-stack &amp; AI engineer</span><a href="/">Home ↑</a></footer>
+  <script src="/script.js" defer></script>
+</body>
+</html>
