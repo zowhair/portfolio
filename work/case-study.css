@@ -91,3 +91,9 @@
   .decision > div { grid-template-columns: 1fr; gap: .2rem; }
   .decision dt { padding-top: 0; }
 }
+
+/* The diagram sits inside .prose; keep its dark-card colours. */
+.diagram p, .diagram .lane-title { margin: 0 0 .8rem; color: #c3c8d2; font-size: .62rem; line-height: 1.4; }
+.diagram strong { color: #fff; }
+.diagram .dnode span { color: #a9afbb; }
+.diagram .darrow { color: #a9afbb; }
